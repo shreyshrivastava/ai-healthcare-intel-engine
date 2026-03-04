@@ -1,0 +1,4 @@
+report_text,risk_label
+"Patient admitted to ICU with septic shock requiring ventilator support and vasopressors.",High
+"Complex case with multiple comorbidities; surgery planned; poorly controlled diabetes.",Medium
+"Uncomplicated urinary tract infection, responding to oral antibiotics, no ICU care.",Low

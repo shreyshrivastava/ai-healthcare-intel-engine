@@ -1,0 +1,22 @@
+[
+  {
+    "report_text": "Patient admitted to ICU with septic shock requiring ventilator support and vasopressors.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Complex case with multiple comorbidities; surgery planned for unstable angina; poorly controlled diabetes.",
+    "risk_label": "Medium"
+  },
+  {
+    "report_text": "Uncomplicated urinary tract infection, responding to oral antibiotics, no ICU care.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Recurrent hospitalizations with worsening heart failure symptoms and renal impairment.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Moderate asthma exacerbation controlled with inhaled bronchodilators and steroids; no ICU admission.",
+    "risk_label": "Medium"
+  }
+]

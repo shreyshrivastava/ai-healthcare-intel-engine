@@ -1,0 +1,5 @@
+drug_a,drug_b,risk_level,mechanism
+warfarin,aspirin,major,additive anticoagulant/antiplatelet effect → increased bleeding risk
+simvastatin,clarithromycin,major,CYP3A4 inhibition → increased statin levels; myopathy risk
+clopidogrel,omeprazole,moderate,CYP2C19 inhibition → reduced clopidogrel activation
+sildenafil,nitroglycerin,major,additive vasodilation → severe hypotension risk

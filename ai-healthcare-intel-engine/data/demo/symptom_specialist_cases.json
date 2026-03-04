@@ -1,0 +1,22 @@
+[
+  {
+    "text": "chest pain on exertion, shortness of breath, history of high blood pressure",
+    "specialty": "Cardiology"
+  },
+  {
+    "text": "persistent cough, wheezing, difficulty breathing especially at night",
+    "specialty": "Pulmonology"
+  },
+  {
+    "text": "frequent urination, increased thirst, fatigue, poorly controlled blood sugar",
+    "specialty": "Endocrinology"
+  },
+  {
+    "text": "recurrent headaches, dizziness, vision problems, high blood pressure",
+    "specialty": "Neurology"
+  },
+  {
+    "text": "joint pain in knees and hands, morning stiffness, swelling in joints",
+    "specialty": "Rheumatology"
+  }
+]

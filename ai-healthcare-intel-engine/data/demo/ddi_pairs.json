@@ -1,0 +1,44 @@
+[
+  {
+    "drug_a": "warfarin",
+    "drug_b": "aspirin",
+    "risk_level": "High",
+    "mechanism": "additive anticoagulant/antiplatelet effect \u2192 increased bleeding risk"
+  },
+  {
+    "drug_a": "warfarin",
+    "drug_b": "ibuprofen",
+    "risk_level": "High",
+    "mechanism": "NSAID increases bleeding and GI ulcer risk"
+  },
+  {
+    "drug_a": "simvastatin",
+    "drug_b": "clarithromycin",
+    "risk_level": "High",
+    "mechanism": "CYP3A4 inhibition \u2192 increased statin levels; myopathy risk"
+  },
+  {
+    "drug_a": "sildenafil",
+    "drug_b": "nitroglycerin",
+    "risk_level": "High",
+    "mechanism": "additive vasodilation \u2192 severe hypotension risk"
+  },
+  {
+    "drug_a": "digoxin",
+    "drug_b": "amiodarone",
+    "risk_level": "High",
+    "mechanism": "P-gp inhibition \u2192 increased digoxin levels; toxicity risk"
+  },
+  {
+    "drug_a": "clopidogrel",
+    "drug_b": "omeprazole",
+    "risk_level": "Moderate",
+    "mechanism": "CYP2C19 inhibition \u2192 reduced clopidogrel activation"
+  },
+  {
+    "drug_a": "levothyroxine",
+    "drug_b": "calcium carbonate",
+    "risk_level": "Moderate",
+    "mechanism": "reduced levothyroxine absorption"
+  }
+]
