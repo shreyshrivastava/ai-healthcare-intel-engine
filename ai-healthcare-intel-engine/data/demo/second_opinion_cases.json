@@ -4,7 +4,7 @@
     "risk_label": "High"
   },
   {
-    "report_text": "Complex case with multiple comorbidities; surgery planned for unstable angina; poorly controlled diabetes.",
+    "report_text": "Complex case with multiple comorbidities; surgery planned; poorly controlled diabetes.",
     "risk_label": "Medium"
   },
   {
@@ -12,11 +12,71 @@
     "risk_label": "Low"
   },
   {
-    "report_text": "Recurrent hospitalizations with worsening heart failure symptoms and renal impairment.",
+    "report_text": "70yo male with acute ST-elevation myocardial infarction, awaiting emergency cardiac catheterization.",
     "risk_label": "High"
   },
   {
-    "report_text": "Moderate asthma exacerbation controlled with inhaled bronchodilators and steroids; no ICU admission.",
+    "report_text": "45yo female with mild asthma exacerbation, O2 saturation 98% on room air, discharged with albuterol inhaler.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Patient with acute kidney injury secondary to dehydration, creatinine 2.5 mg/dL, starting IV fluids.",
     "risk_label": "Medium"
+  },
+  {
+    "report_text": "Neutropenic fever in a 55yo oncology patient post-chemotherapy, admitted for broad-spectrum IV antibiotics.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Routine follow-up for well-controlled primary hypertension, BP 120/80, no new complaints.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Extensive acute pulmonary embolism with right heart strain on echo, stable blood pressure.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Type 2 diabetes with newly diagnosed microalbuminuria, initiating ACE inhibitor therapy.",
+    "risk_label": "Medium"
+  },
+  {
+    "report_text": "22yo with acute appendicitis, localized pain, stable vitals, prepped for laparoscopic appendectomy.",
+    "risk_label": "Medium"
+  },
+  {
+    "report_text": "Elderly patient with severe community-acquired pneumonia, confusion, RR 30, requiring high-flow nasal cannula.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Minor laceration on left forearm, closed with sutures, no sign of infection.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Acute upper GI bleed with melena and tachycardia, hemoglobin dropped to 6.8 g/dL, planning EGD.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "Cirrhosis with moderate ascites, admitted for therapeutic paracentesis, hemodynamically stable.",
+    "risk_label": "Medium"
+  },
+  {
+    "report_text": "Patient presenting with subjective fever and viral URI symptoms, chest X-ray clear, normal vitals.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Status epilepticus unresponsive to initial benzodiazepines, intubated for airway protection.",
+    "risk_label": "High"
+  },
+  {
+    "report_text": "New onset atrial fibrillation with rapid ventricular response (HR 130), initiating diltiazem drip.",
+    "risk_label": "Medium"
+  },
+  {
+    "report_text": "Sprained ankle with negative X-rays, treated with RICE and NSAIDs.",
+    "risk_label": "Low"
+  },
+  {
+    "report_text": "Subarachnoid hemorrhage with altered mental status, admitted to neuro ICU.",
+    "risk_label": "High"
   }
 ]

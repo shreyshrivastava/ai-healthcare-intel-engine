@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/assess", response_model=SecondOpinionResponse)
-async def assess_second_opinion(payload: SecondOpinionRequest) -> SecondOpinionResponse:
+def assess_second_opinion(payload: SecondOpinionRequest) -> SecondOpinionResponse:
     prediction = assess_report_text(payload.report_text)
     if prediction.contributing_phrases:
         phrases = ", ".join(f"'{p}'" for p in prediction.contributing_phrases)

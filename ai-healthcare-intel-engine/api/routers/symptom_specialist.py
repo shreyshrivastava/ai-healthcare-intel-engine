@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/predict", response_model=SymptomSpecialistResponse)
-async def predict_specialist(payload: SymptomSpecialistRequest) -> SymptomSpecialistResponse:
+def predict_specialist(payload: SymptomSpecialistRequest) -> SymptomSpecialistResponse:
     ranked = predict_ranked_specialties(payload.symptoms_text)
     explanation = (
         "Ranked using a sentence-transformer encoder over a small demo corpus. "

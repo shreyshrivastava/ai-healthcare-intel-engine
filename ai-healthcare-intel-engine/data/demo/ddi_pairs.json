@@ -3,42 +3,120 @@
     "drug_a": "warfarin",
     "drug_b": "aspirin",
     "risk_level": "High",
-    "mechanism": "additive anticoagulant/antiplatelet effect \u2192 increased bleeding risk"
-  },
-  {
-    "drug_a": "warfarin",
-    "drug_b": "ibuprofen",
-    "risk_level": "High",
-    "mechanism": "NSAID increases bleeding and GI ulcer risk"
+    "mechanism": "additive anticoagulant/antiplatelet effect -> increased bleeding risk"
   },
   {
     "drug_a": "simvastatin",
     "drug_b": "clarithromycin",
     "risk_level": "High",
-    "mechanism": "CYP3A4 inhibition \u2192 increased statin levels; myopathy risk"
-  },
-  {
-    "drug_a": "sildenafil",
-    "drug_b": "nitroglycerin",
-    "risk_level": "High",
-    "mechanism": "additive vasodilation \u2192 severe hypotension risk"
-  },
-  {
-    "drug_a": "digoxin",
-    "drug_b": "amiodarone",
-    "risk_level": "High",
-    "mechanism": "P-gp inhibition \u2192 increased digoxin levels; toxicity risk"
+    "mechanism": "CYP3A4 inhibition -> increased statin levels; myopathy risk"
   },
   {
     "drug_a": "clopidogrel",
     "drug_b": "omeprazole",
     "risk_level": "Moderate",
-    "mechanism": "CYP2C19 inhibition \u2192 reduced clopidogrel activation"
+    "mechanism": "CYP2C19 inhibition -> reduced clopidogrel activation"
   },
   {
-    "drug_a": "levothyroxine",
+    "drug_a": "sildenafil",
+    "drug_b": "nitroglycerin",
+    "risk_level": "High",
+    "mechanism": "additive vasodilation -> severe hypotension risk"
+  },
+  {
+    "drug_a": "lisinopril",
+    "drug_b": "spironolactone",
+    "risk_level": "High",
+    "mechanism": "additive hyperkalemia risk"
+  },
+  {
+    "drug_a": "amiodarone",
+    "drug_b": "digoxin",
+    "risk_level": "High",
+    "mechanism": "decreased digoxin clearance -> increased digoxin toxicity"
+  },
+  {
+    "drug_a": "methotrexate",
+    "drug_b": "trimethoprim",
+    "risk_level": "High",
+    "mechanism": "additive folate antagonism -> bone marrow suppression"
+  },
+  {
+    "drug_a": "fluoxetine",
+    "drug_b": "phenelzine",
+    "risk_level": "High",
+    "mechanism": "serotonin syndrome risk due to MAOI and SSRI combination"
+  },
+  {
+    "drug_a": "ibuprofen",
+    "drug_b": "lithium",
+    "risk_level": "High",
+    "mechanism": "decreased renal clearance of lithium -> lithium toxicity"
+  },
+  {
+    "drug_a": "atorvastatin",
+    "drug_b": "grapefruit juice",
+    "risk_level": "Moderate",
+    "mechanism": "CYP3A4 inhibition -> increased statin levels"
+  },
+  {
+    "drug_a": "metronidazole",
+    "drug_b": "ethanol",
+    "risk_level": "High",
+    "mechanism": "disulfiram-like reaction"
+  },
+  {
+    "drug_a": "citalopram",
+    "drug_b": "ondansetron",
+    "risk_level": "High",
+    "mechanism": "additive QT prolongation -> risk of Torsades de Pointes"
+  },
+  {
+    "drug_a": "synthroid",
     "drug_b": "calcium carbonate",
     "risk_level": "Moderate",
-    "mechanism": "reduced levothyroxine absorption"
+    "mechanism": "decreased absorption of levothyroxine"
+  },
+  {
+    "drug_a": "allopurinol",
+    "drug_b": "azathioprine",
+    "risk_level": "High",
+    "mechanism": "xanthine oxidase inhibition -> increased azathioprine toxicity"
+  },
+  {
+    "drug_a": "carbamazepine",
+    "drug_b": "oral contraceptives",
+    "risk_level": "High",
+    "mechanism": "CYP3A4 induction -> decreased contraceptive efficacy"
+  },
+  {
+    "drug_a": "ciprofloxacin",
+    "drug_b": "tizanidine",
+    "risk_level": "High",
+    "mechanism": "CYP1A2 inhibition -> severe hypotension and sedation"
+  },
+  {
+    "drug_a": "tramadol",
+    "drug_b": "venlafaxine",
+    "risk_level": "High",
+    "mechanism": "increased risk of serotonin syndrome and seizures"
+  },
+  {
+    "drug_a": "valproic acid",
+    "drug_b": "lamotrigine",
+    "risk_level": "High",
+    "mechanism": "decreased lamotrigine clearance -> risk of Stevens-Johnson syndrome"
+  },
+  {
+    "drug_a": "phenytoin",
+    "drug_b": "warfarin",
+    "risk_level": "High",
+    "mechanism": "initial increased bleeding risk, followed by decreased INR due to CYP induction"
+  },
+  {
+    "drug_a": "theophylline",
+    "drug_b": "ciprofloxacin",
+    "risk_level": "High",
+    "mechanism": "CYP1A2 inhibition -> theophylline toxicity (seizures, arrhythmias)"
   }
 ]

@@ -6,7 +6,6 @@ import streamlit as st
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
-
 st.set_page_config(page_title="AI Healthcare Intelligence Engine", layout="wide")
 
 st.title("AI Healthcare Intelligence Engine")
@@ -28,7 +27,7 @@ with tab1:
             resp = requests.post(
                 f"{API_URL}/symptom-specialist/predict",
                 json={"symptoms_text": symptoms_text},
-                timeout=30,
+                timeout=300,
             )
             if resp.ok:
                 data = resp.json()
@@ -51,7 +50,7 @@ with tab2:
             resp = requests.post(
                 f"{API_URL}/second-opinion/assess",
                 json={"report_text": report_text},
-                timeout=30,
+                timeout=300,
             )
             if resp.ok:
                 data = resp.json()
@@ -80,7 +79,7 @@ with tab3:
             resp = requests.post(
                 f"{API_URL}/drug-interactions/check",
                 json={"drugs": drugs},
-                timeout=30,
+                timeout=300,
             )
             if resp.ok:
                 data = resp.json()

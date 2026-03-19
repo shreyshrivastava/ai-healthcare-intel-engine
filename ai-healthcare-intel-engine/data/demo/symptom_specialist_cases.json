@@ -18,5 +18,65 @@
   {
     "text": "joint pain in knees and hands, morning stiffness, swelling in joints",
     "specialty": "Rheumatology"
+  },
+  {
+    "text": "right lower quadrant abdominal pain, nausea, vomiting, fever",
+    "specialty": "gastroenterology"
+  },
+  {
+    "text": "blood in urine, flank pain, painful urination, frequent urgency",
+    "specialty": "urology"
+  },
+  {
+    "text": "irregular menstrual cycles, severe pelvic pain, hot flashes",
+    "specialty": "gynecology"
+  },
+  {
+    "text": "new skin lesion with irregular borders, changing in size and color, itching",
+    "specialty": "dermatology"
+  },
+  {
+    "text": "chronic sadness, loss of interest, insomnia, feelings of worthlessness",
+    "specialty": "psychiatry"
+  },
+  {
+    "text": "blurry vision, eye pain, seeing halos around lights, redness in the eye",
+    "specialty": "ophthalmology"
+  },
+  {
+    "text": "hearing loss, ringing in ears, severe sore throat, persistent sinus pressure",
+    "specialty": "otolaryngology"
+  },
+  {
+    "text": "enlarged lymph nodes, unexplained weight loss, night sweats, fatigue",
+    "specialty": "oncology"
+  },
+  {
+    "text": "recurrent infections, chronic diarrhea, unexplained fevers, weight loss",
+    "specialty": "infectious disease"
+  },
+  {
+    "text": "numbness and tingling in the feet, burning pain, lack of sensation",
+    "specialty": "Neurology"
+  },
+  {
+    "text": "heart palpitations, fast heart rate, skipped beats, lightheadedness",
+    "specialty": "Cardiology"
+  },
+  {
+    "text": "chronic back pain with radiation down the leg, weakness in foot",
+    "specialty": "orthopedics"
+  },
+  {
+    "text": "severe rash after taking new medication, facial swelling, difficulty breathing",
+    "specialty": "allergy/immunology"
+  },
+  {
+    "text": "delayed milestone development, frequent pediatric infections, poor growth",
+    "specialty": "pediatrics"
+  },
+  {
+    "text": "memory loss, confusion, difficulty performing daily tasks, personality changes",
+    "specialty": "geriatrics"
   }
 ]

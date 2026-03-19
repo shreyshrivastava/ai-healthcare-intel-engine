@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/check", response_model=DrugInteractionsResponse)
-async def check_drug_interactions(payload: DrugInteractionsRequest) -> DrugInteractionsResponse:
+def check_drug_interactions(payload: DrugInteractionsRequest) -> DrugInteractionsResponse:
     drugs: List[str] = payload.drugs
     results = check_interactions(drugs)
     pairs = to_schema_pairs(results)

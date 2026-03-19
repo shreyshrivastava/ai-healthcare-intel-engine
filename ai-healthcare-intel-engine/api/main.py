@@ -23,6 +23,10 @@ def create_app() -> FastAPI:
     app.include_router(second_opinion.router, prefix="/second-opinion", tags=["second-opinion"])
     app.include_router(drug_interaction.router, prefix="/drug-interactions", tags=["drug-interactions"])
 
+    @app.get("/")
+    def root():
+        return {"status": "ok", "message": "AI Healthcare Intelligence Engine API is running. Visit /docs for documentation."}
+
     return app
 
 
