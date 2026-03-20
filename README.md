@@ -1,5 +1,4 @@
-## AI Healthcare Intelligence Engine (Portfolio Project)
-
+## AI Healthcare Intelligence Engine 
 Three connected backend modules exposed via FastAPI and demoed in Streamlit:
 
 - **Symptom → Specialist Matching**: embedding-based similarity search over a (demo) case corpus.
