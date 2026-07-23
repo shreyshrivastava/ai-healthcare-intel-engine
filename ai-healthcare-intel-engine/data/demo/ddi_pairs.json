@@ -72,7 +72,7 @@
     "mechanism": "additive QT prolongation -> risk of Torsades de Pointes"
   },
   {
-    "drug_a": "synthroid",
+    "drug_a": "levothyroxine",
     "drug_b": "calcium carbonate",
     "risk_level": "Moderate",
     "mechanism": "decreased absorption of levothyroxine"

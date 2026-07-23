@@ -1,0 +1,57 @@
+{
+  "project_name": "AI Healthcare Intelligence Engine",
+  "repository": "https://github.com/shreyshrivastava/ai-healthcare-intel-engine",
+  "resume_decision": "Supporting resume project",
+  "target_roles": [
+    "Applied AI Engineer",
+    "AI Engineer",
+    "LLM Engineer",
+    "Generative AI Engineer",
+    "Machine Learning Engineer",
+    "AI Data Engineer",
+    "Python Backend Engineer"
+  ],
+  "scores": {
+    "technical_depth": 7,
+    "software_engineering_quality": 8,
+    "ai_ml_relevance": 7,
+    "product_usefulness": 7,
+    "reliability": 8,
+    "documentation": 8,
+    "deployment_readiness": 7,
+    "testing_quality": 8,
+    "originality": 6,
+    "resume_value": 8
+  },
+  "live_url": "",
+  "ci_status": "Configured locally; not pushed yet",
+  "deployment_status": "Prepared for Streamlit Cloud deterministic local mode; public URL not verified",
+  "benchmark_summary": {
+    "iterations": 10,
+    "embedding_backend": "keyword",
+    "api_app_creation_median_ms": 0.10,
+    "symptom_ranking_median_ms": 0.03,
+    "second_opinion_median_ms": 0.04,
+    "drug_interactions_median_ms": 0.07
+  },
+  "evaluation_summary": {
+    "symptom_top1_accuracy": 1.0,
+    "symptom_top3_accuracy": 1.0,
+    "second_opinion_accuracy": 1.0,
+    "ddi_positive_recall": 1.0,
+    "ddi_negative_specificity": 1.0
+  },
+  "resume_bullets": [
+    "Built a three-module healthcare AI demo with FastAPI endpoints and a Streamlit UI for symptom-specialist routing, second-opinion risk, and drug-drug interaction lookup.",
+    "Added deterministic CI/cloud fallback for symptom ranking while preserving optional sentence-transformer embeddings for local ML experimentation.",
+    "Implemented API validation, graph-based DDI lookup, RxNorm-style alias normalization, synthetic evaluation, latency benchmarks, and GitHub Actions CI.",
+    "Documented privacy, healthcare safety boundaries, deployment tradeoffs, and limitations to avoid unsupported clinical claims."
+  ],
+  "remaining_tasks": [
+    "Push branch after user approval",
+    "Open PR and verify GitHub Actions",
+    "Deploy Streamlit Cloud app in local deterministic mode",
+    "Add screenshots",
+    "Expand evaluation with larger licensed datasets"
+  ]
+}

@@ -1,0 +1,23 @@
+.DS_Store
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+.venv312/
+venv/
+
+# Runtime artifacts
+logs/
+
+# External data downloaded by users
+ai-healthcare-intel-engine/data/external/*.zip
+ai-healthcare-intel-engine/data/external/*.parquet
+ai-healthcare-intel-engine/data/external/*.csv
+!ai-healthcare-intel-engine/data/external/README.md
+!ai-healthcare-intel-engine/data/external/*.example.csv

@@ -1,8 +1,6 @@
-from fastapi import APIRouter
-
 from api.schemas import SecondOpinionRequest, SecondOpinionResponse
+from fastapi import APIRouter
 from services.second_opinion.model import assess_report_text
-
 
 router = APIRouter()
 

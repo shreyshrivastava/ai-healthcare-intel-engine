@@ -1,8 +1,6 @@
-from fastapi import APIRouter
-
 from api.schemas import SymptomSpecialistRequest, SymptomSpecialistResponse
+from fastapi import APIRouter
 from services.symptom_specialist.retriever import predict_ranked_specialties
-
 
 router = APIRouter()
 

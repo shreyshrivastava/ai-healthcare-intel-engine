@@ -1,7 +1,15 @@
+import os
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import symptom_specialist, second_opinion, drug_interaction
+from .routers import drug_interaction, second_opinion, symptom_specialist
+
+
+def allowed_cors_origins() -> list[str]:
+    raw_origins = os.getenv("CORS_ALLOW_ORIGINS", "*")
+    origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+    return origins or ["*"]
 
 
 def create_app() -> FastAPI:
@@ -11,21 +19,37 @@ def create_app() -> FastAPI:
         description="Symptom-to-specialist, second-opinion risk, and drug interaction intelligence APIs.",
     )
 
+    origins = allowed_cors_origins()
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
+        allow_origins=origins,
+        allow_credentials="*" not in origins,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    app.include_router(symptom_specialist.router, prefix="/symptom-specialist", tags=["symptom-specialist"])
+    app.include_router(
+        symptom_specialist.router,
+        prefix="/symptom-specialist",
+        tags=["symptom-specialist"],
+    )
     app.include_router(second_opinion.router, prefix="/second-opinion", tags=["second-opinion"])
-    app.include_router(drug_interaction.router, prefix="/drug-interactions", tags=["drug-interactions"])
+    app.include_router(
+        drug_interaction.router,
+        prefix="/drug-interactions",
+        tags=["drug-interactions"],
+    )
 
     @app.get("/")
     def root():
-        return {"status": "ok", "message": "AI Healthcare Intelligence Engine API is running. Visit /docs for documentation."}
+        return {
+            "status": "ok",
+            "message": "AI Healthcare Intelligence Engine API is running. Visit /docs for documentation.",
+        }
+
+    @app.get("/health")
+    def health():
+        return {"status": "ok"}
 
     return app
 

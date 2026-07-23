@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """
 Convert a real second-opinion / complexity dataset into a simple
 `second_opinion_cases.json` schema suitable for training.
@@ -16,18 +14,18 @@ Where:
   - risk_label: free text or code indicating complexity (e.g. low/medium/high)
 """
 
+from __future__ import annotations
+
 import csv
 import json
 from pathlib import Path
-from typing import Dict, List
-
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_CSV = ROOT / "data" / "external" / "second_opinion_raw.csv"
 OUT_JSON = ROOT / "data" / "demo" / "second_opinion_cases.json"
 
 
-LABEL_MAP: Dict[str, str] = {
+LABEL_MAP: dict[str, str] = {
     "low": "Low",
     "minor": "Low",
     "medium": "Medium",
@@ -52,7 +50,7 @@ def main() -> None:
             f"Expected CSV at {RAW_CSV}, with columns: report_text,risk_label"
         )
 
-    cases: List[Dict[str, str]] = []
+    cases: list[dict[str, str]] = []
     with RAW_CSV.open("r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         required = {"report_text", "risk_label"}

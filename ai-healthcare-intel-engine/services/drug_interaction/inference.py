@@ -1,16 +1,17 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from itertools import combinations
-from typing import Dict, List, Tuple
-
 import json
+import logging
+from dataclasses import dataclass
+from itertools import combinations
 from pathlib import Path
 
 import networkx as nx
-
 from api.schemas import DrugInteractionPair
+
 from .kg_builder import build_demo_ddi_kg
+
+logger = logging.getLogger(__name__)
 
 
 _KG: nx.MultiDiGraph | None = None
@@ -31,17 +32,14 @@ class InteractionResult:
     explanation: str
 
 
-import logging
-
-logger = logging.getLogger(__name__)
-
-
 def mock_rxnorm_api_lookup(drug_name: str) -> str:
     """
-    Simulates an Enterprise API call to the NIH RxNorm terminology server 
+    Simulates an enterprise terminology lookup without making a network call.
+
+    The local alias table approximates RxNorm-style normalization for demos and
+    tests. Production code could replace this function with RxNorm/RxNav.
     to fetch the standardized generic name/RxCUI.
     """
-    # A tiny simulated ontology for demonstration
     ontology = {
         "acetaminophen": "paracetamol",
         "tylenol": "paracetamol",
@@ -52,9 +50,9 @@ def mock_rxnorm_api_lookup(drug_name: str) -> str:
         "oacs": "oral contraceptives",
         "birth control": "oral contraceptives",
         "nitrates": "nitroglycerin",
+        "synthroid": "levothyroxine",
     }
-    
-    # Check external aliases as well for flexibility
+
     root = Path(__file__).resolve().parents[2]
     alias_path = root / "data" / "external" / "drug_aliases.json"
     if alias_path.exists():
@@ -64,40 +62,42 @@ def mock_rxnorm_api_lookup(drug_name: str) -> str:
             for k, v in user_aliases.items():
                 ontology.setdefault(k.strip().lower(), v.strip().lower())
         except Exception:
-            pass
+            logger.exception("Unable to load external drug alias file: %s", alias_path)
 
     key = drug_name.strip().lower()
-    # Mocks an external HTTP call to https://rxnav.nlm.nih.gov/
     result = ontology.get(key, key)
     if result != key:
-        logger.info(f"[RxNorm Engine] Resolved brand name '{key}' -> Standardized Concept '{result}'")
+        logger.info("Resolved drug alias '%s' to '%s'", key, result)
     return result
 
 
 def canonicalize_drug_name(name: str) -> str:
     """
-    Standarize names via medical terminology APIs.
+    Standardize drug names before knowledge-graph lookup.
     """
     return mock_rxnorm_api_lookup(name)
 
-RISK_ORDER: Dict[str, int] = {"None": 0, "Low": 1, "Moderate": 2, "High": 3, "Unknown": 0}
+
+RISK_ORDER: dict[str, int] = {"None": 0, "Low": 1, "Moderate": 2, "High": 3, "Unknown": 0}
 
 
-def overall_risk_from_pairs(pairs: List[InteractionResult]) -> str:
+def overall_risk_from_pairs(pairs: list[InteractionResult]) -> str:
     if not pairs:
         return "None"
     best = max(pairs, key=lambda p: RISK_ORDER.get(p.risk_level, 0))
     return best.risk_level if best.risk_level else "Unknown"
 
 
-def check_interactions(drugs: List[str]) -> List[InteractionResult]:
+def check_interactions(drugs: list[str]) -> list[InteractionResult]:
     g = get_kg()
-    results: List[InteractionResult] = []
-    norm: Dict[str, str] = {}
-    for d in drugs:
-        canon = canonicalize_drug_name(d)
-        # keep the first original formatting we saw
-        norm.setdefault(canon, d)
+    results: list[InteractionResult] = []
+    norm: dict[str, str] = {}
+    for drug in drugs:
+        cleaned = drug.strip()
+        if not cleaned:
+            continue
+        canon = canonicalize_drug_name(cleaned)
+        norm.setdefault(canon, cleaned)
 
     for a, b in combinations(norm.keys(), 2):
         if g.has_edge(a, b, key="ddi") or g.has_edge(b, a, key="ddi"):
@@ -121,7 +121,7 @@ def check_interactions(drugs: List[str]) -> List[InteractionResult]:
     return results
 
 
-def to_schema_pairs(results: List[InteractionResult]) -> List[DrugInteractionPair]:
+def to_schema_pairs(results: list[InteractionResult]) -> list[DrugInteractionPair]:
     return [
         DrugInteractionPair(
             drug_a=r.drug_a,
@@ -131,4 +131,3 @@ def to_schema_pairs(results: List[InteractionResult]) -> List[DrugInteractionPai
         )
         for r in results
     ]
-
