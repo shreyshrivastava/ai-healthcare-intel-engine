@@ -13,4 +13,3 @@ def predict_specialist(payload: SymptomSpecialistRequest) -> SymptomSpecialistRe
         "Scores reflect embedding similarity to historical-like cases."
     )
     return SymptomSpecialistResponse(ranked_specialties=ranked, explanation=explanation)
-

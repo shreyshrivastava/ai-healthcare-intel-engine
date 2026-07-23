@@ -39,6 +39,9 @@ jobs:
       - name: Lint
         run: ruff check .
 
+      - name: Check formatting
+        run: ruff format --check .
+
       - name: Compile Python files
         run: python -m compileall ai-healthcare-intel-engine tests evaluation benchmarks
 
@@ -48,5 +51,13 @@ jobs:
       - name: Run evaluation
         run: python evaluation/run_evaluation.py
 
+      - name: Run model comparison smoke
+        run: python evaluation/run_model_comparison.py
+
       - name: Run benchmark smoke
         run: python benchmarks/run_benchmarks.py 1
+
+      - name: Validate Docker builds
+        run: |
+          docker build -f Dockerfile -t healthcare-intel-streamlit:ci .
+          docker build -f Dockerfile.api -t healthcare-intel-api:ci .

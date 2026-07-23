@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-The project is now a credible supporting AI engineering portfolio project. Its strongest evidence is not model novelty; it is the practical engineering around safe healthcare AI demos: deterministic fallback, API validation, CI-safe tests, synthetic evaluation, benchmarks, privacy documentation, and deployment readiness.
+The project is now a credible supporting AI engineering portfolio project. Its strongest evidence is not model novelty; it is the practical engineering around safe healthcare AI demos: deterministic fallback, API validation, CI-safe tests, synthetic evaluation, model-comparison hooks, latency benchmarks, privacy documentation, observability, screenshots, and deployment readiness.
 
-Initial estimated score: 4.2/10. Final estimated score after this pass: 7.6/10.
+Initial estimated score: 4.2/10. Final estimated score after this pass: 8.0/10.
 
 ## Resume Decision
 
@@ -29,10 +29,10 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 | Technical depth | 7 |
 | Software engineering quality | 8 |
 | AI/ML relevance | 7 |
-| Product usefulness | 7 |
+| Product usefulness | 8 |
 | Reliability | 8 |
-| Documentation | 8 |
-| Deployment readiness | 7 |
+| Documentation | 9 |
+| Deployment readiness | 8 |
 | Testing quality | 8 |
 | Originality | 6 |
 | Resume value | 8 |
@@ -45,6 +45,7 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 - Pydantic validation on API inputs.
 - Synthetic evaluation and latency benchmarks committed as reproducible scripts.
 - Privacy and clinical-safety limitations documented clearly.
+- Streamlit screenshots captured from an actual local UI test run.
 
 ## Weaknesses
 
@@ -65,13 +66,14 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 - Improved second-opinion risk phrase matching and negation handling.
 - Fixed DDI normalized generic lookup for levothyroxine/Synthroid.
 - Added pytest suite, evaluation script, benchmark script, CI, benchmark workflow, README, docs, audit JSON, and MIT license.
+- Added expanded synthetic evaluation cases, model-comparison script, API observability, Dockerfiles, and improved Streamlit UI.
 
 ## Tests
 
 Latest local result:
 
 ```text
-18 passed, 1 warning
+20 passed, 1 warning
 ```
 
 The warning is from FastAPI/Starlette's test client dependency transition and does not affect runtime behavior.
@@ -80,11 +82,12 @@ The warning is from FastAPI/Starlette's test client dependency transition and do
 
 Latest local deterministic evaluation:
 
-- Symptom specialist top-1 accuracy: 100.00% over 20 cases
-- Symptom specialist top-3 accuracy: 100.00% over 20 cases
-- Second-opinion risk accuracy: 100.00% over 20 cases
+- Symptom specialist top-1 accuracy: 100.00% over 32 cases
+- Symptom specialist top-3 accuracy: 100.00% over 32 cases
+- Second-opinion risk accuracy: 100.00% over 32 cases
 - DDI positive recall: 100.00% over 20 known interactions
-- DDI negative specificity: 100.00% over 4 negative pairs
+- DDI expanded scenario accuracy: 100.00% over 5 alias/edge cases
+- DDI negative specificity: 100.00% over 10 negative pairs
 
 These are synthetic regression metrics, not clinical validation metrics.
 
@@ -92,9 +95,9 @@ These are synthetic regression metrics, not clinical validation metrics.
 
 Latest local deterministic benchmark:
 
-- API app creation median: 0.10 ms
+- API app creation median: 0.14 ms
 - Symptom ranking median: 0.03 ms
-- Second-opinion risk median: 0.04 ms
+- Second-opinion risk median: 0.03 ms
 - Drug interaction check median: 0.07 ms
 
 Environment: Python 3.14.5 on macOS 26.5.2 arm64, keyword backend, 10 iterations.
@@ -102,6 +105,8 @@ Environment: Python 3.14.5 on macOS 26.5.2 arm64, keyword backend, 10 iterations
 ## Deployment
 
 Prepared for Streamlit Cloud standalone deployment.
+
+Dockerfiles were added for Streamlit and FastAPI. Local Docker image builds were not run in this environment because the `docker` CLI is not installed.
 
 ## Live URL
 
@@ -111,7 +116,7 @@ No verified live URL yet.
 
 Added GitHub Actions CI and benchmark workflows.
 
-CI runs dependency install, ruff, compileall, pytest, evaluation, and benchmark smoke in deterministic keyword mode.
+CI runs dependency install, ruff linting, ruff formatting checks, compileall, pytest, evaluation, model-comparison smoke, benchmark smoke, and Docker build validation in deterministic keyword mode.
 
 ## Security and Privacy
 
@@ -129,12 +134,12 @@ AI Healthcare Intelligence Engine: built a FastAPI and Streamlit clinical decisi
 
 - Built a three-module healthcare AI demo with FastAPI endpoints and a Streamlit UI for symptom-specialist routing, second-opinion risk, and drug-drug interaction lookup.
 - Added deterministic CI/cloud fallback for symptom ranking while preserving optional sentence-transformer embeddings for local ML experimentation.
-- Implemented API validation, graph-based DDI lookup, RxNorm-style alias normalization, synthetic evaluation, latency benchmarks, and GitHub Actions CI.
+- Implemented API validation, graph-based DDI lookup, RxNorm-style alias normalization, synthetic evaluation, model comparison, latency benchmarks, observability, Docker, and GitHub Actions CI.
 - Documented privacy, healthcare safety boundaries, deployment tradeoffs, and limitations to avoid unsupported clinical claims.
 
 ## Remaining Limitations
 
-- Needs public Streamlit deployment and screenshots.
+- Needs public Streamlit deployment.
 - Needs larger licensed datasets before stronger ML quality claims.
 - Needs real observability and auth before any production-like healthcare positioning.
 

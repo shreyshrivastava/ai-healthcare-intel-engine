@@ -1,6 +1,7 @@
 import os
 
-from fastapi import FastAPI
+from core.observability import metrics_snapshot, perf_counter_ms, record_request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .routers import drug_interaction, second_opinion, symptom_specialist
@@ -40,6 +41,18 @@ def create_app() -> FastAPI:
         tags=["drug-interactions"],
     )
 
+    @app.middleware("http")
+    async def record_request_metrics(request: Request, call_next):
+        start_ms = perf_counter_ms()
+        status_code = 500
+        try:
+            response = await call_next(request)
+            status_code = response.status_code
+            return response
+        finally:
+            duration_ms = perf_counter_ms() - start_ms
+            record_request(request.method, request.url.path, status_code, duration_ms)
+
     @app.get("/")
     def root():
         return {
@@ -50,6 +63,10 @@ def create_app() -> FastAPI:
     @app.get("/health")
     def health():
         return {"status": "ok"}
+
+    @app.get("/metrics")
+    def metrics():
+        return metrics_snapshot()
 
     return app
 

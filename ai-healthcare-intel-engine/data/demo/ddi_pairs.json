@@ -37,7 +37,7 @@
   },
   {
     "drug_a": "methotrexate",
-    "drug_b": "trimethoprim",
+    "drug_b": "trimethoprim-sulfamethoxazole",
     "risk_level": "High",
     "mechanism": "additive folate antagonism -> bone marrow suppression"
   },

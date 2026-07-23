@@ -15,6 +15,28 @@ Settings:
 
 This deploys one process and does not require FastAPI, GPUs, paid APIs, model downloads, or private credentials.
 
+## Docker Deployment
+
+Standalone Streamlit image:
+
+```bash
+docker build -t healthcare-intel-streamlit .
+docker run --rm -p 8501:8501 healthcare-intel-streamlit
+```
+
+FastAPI image:
+
+```bash
+docker build -f Dockerfile.api -t healthcare-intel-api .
+docker run --rm -p 8000:8000 healthcare-intel-api
+```
+
+Local multi-container demo:
+
+```bash
+docker compose up --build
+```
+
 ## API Mode
 
 For a full-stack demo, deploy FastAPI separately and set:
@@ -32,6 +54,12 @@ FastAPI exposes:
 
 ```text
 /health
+```
+
+Metrics snapshot:
+
+```text
+/metrics
 ```
 
 ## Current Live URL

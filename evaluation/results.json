@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-23T18:20:28.543083+00:00",
+  "generated_at": "2026-07-23T18:43:23.840468+00:00",
   "environment": {
     "python": "3.14.5",
     "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
     "embedding_backend": "keyword"
   },
   "symptom_specialist": {
-    "case_count": 20,
+    "case_count": 32,
     "top1_accuracy": 1.0,
     "top3_accuracy": 1.0,
     "cases": [
@@ -189,11 +189,118 @@
           "Pulmonology"
         ],
         "top1": true
+      },
+      {
+        "expected": "Cardiology",
+        "actual_top3": [
+          "Cardiology",
+          "Neurology",
+          "Pediatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Pulmonology",
+        "actual_top3": [
+          "Pulmonology",
+          "Geriatrics",
+          "Pediatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Endocrinology",
+        "actual_top3": [
+          "Endocrinology",
+          "Urology",
+          "Oncology"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Neurology",
+        "actual_top3": [
+          "Neurology",
+          "Ophthalmology"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Rheumatology",
+        "actual_top3": [
+          "Rheumatology",
+          "Allergy/Immunology",
+          "Geriatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Gastroenterology",
+        "actual_top3": [
+          "Gastroenterology",
+          "Geriatrics",
+          "Pediatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Urology",
+        "actual_top3": [
+          "Urology",
+          "Endocrinology",
+          "Geriatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Gynecology",
+        "actual_top3": [
+          "Gynecology",
+          "Geriatrics",
+          "Pediatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Dermatology",
+        "actual_top3": [
+          "Dermatology",
+          "Geriatrics",
+          "Pediatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Otolaryngology",
+        "actual_top3": [
+          "Otolaryngology",
+          "Geriatrics",
+          "Dermatology"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Pediatrics",
+        "actual_top3": [
+          "Pediatrics",
+          "Infectious Disease",
+          "Geriatrics"
+        ],
+        "top1": true
+      },
+      {
+        "expected": "Geriatrics",
+        "actual_top3": [
+          "Geriatrics",
+          "Pediatrics",
+          "Pulmonology"
+        ],
+        "top1": true
       }
     ]
   },
   "second_opinion": {
-    "case_count": 20,
+    "case_count": 32,
     "accuracy": 1.0,
     "cases": [
       {
@@ -353,13 +460,113 @@
           "subarachnoid hemorrhage",
           "icu"
         ]
+      },
+      {
+        "expected": "High",
+        "actual": "High",
+        "correct": true,
+        "contributing_phrases": [
+          "septic shock",
+          "ventilator",
+          "vasopressors",
+          "icu"
+        ]
+      },
+      {
+        "expected": "High",
+        "actual": "High",
+        "correct": true,
+        "contributing_phrases": [
+          "altered mental status",
+          "subarachnoid hemorrhage",
+          "icu"
+        ]
+      },
+      {
+        "expected": "High",
+        "actual": "High",
+        "correct": true,
+        "contributing_phrases": [
+          "intubated",
+          "status epilepticus"
+        ]
+      },
+      {
+        "expected": "High",
+        "actual": "High",
+        "correct": true,
+        "contributing_phrases": [
+          "acute pulmonary embolism"
+        ]
+      },
+      {
+        "expected": "Medium",
+        "actual": "Medium",
+        "correct": true,
+        "contributing_phrases": [
+          "multiple comorbidities",
+          "poorly controlled",
+          "surgery planned"
+        ]
+      },
+      {
+        "expected": "Medium",
+        "actual": "Medium",
+        "correct": true,
+        "contributing_phrases": [
+          "acute kidney injury",
+          "creatinine"
+        ]
+      },
+      {
+        "expected": "Medium",
+        "actual": "Medium",
+        "correct": true,
+        "contributing_phrases": [
+          "microalbuminuria"
+        ]
+      },
+      {
+        "expected": "Medium",
+        "actual": "Medium",
+        "correct": true,
+        "contributing_phrases": [
+          "cirrhosis",
+          "moderate ascites"
+        ]
+      },
+      {
+        "expected": "Low",
+        "actual": "Low",
+        "correct": true,
+        "contributing_phrases": []
+      },
+      {
+        "expected": "Low",
+        "actual": "Low",
+        "correct": true,
+        "contributing_phrases": []
+      },
+      {
+        "expected": "Low",
+        "actual": "Low",
+        "correct": true,
+        "contributing_phrases": []
+      },
+      {
+        "expected": "Low",
+        "actual": "Low",
+        "correct": true,
+        "contributing_phrases": []
       }
     ]
   },
   "drug_interactions": {
     "positive_case_count": 20,
-    "negative_case_count": 4,
+    "expanded_positive_case_count": 5,
+    "negative_case_count": 10,
     "positive_recall": 1.0,
+    "expanded_positive_accuracy": 1.0,
     "negative_specificity": 1.0,
     "positives": [
       {
@@ -406,7 +613,7 @@
       },
       {
         "drug_a": "methotrexate",
-        "drug_b": "trimethoprim",
+        "drug_b": "trimethoprim-sulfamethoxazole",
         "expected_risk": "High",
         "actual_risk": "High",
         "correct": true
@@ -503,6 +710,53 @@
         "correct": true
       }
     ],
+    "expanded_positives": [
+      {
+        "drugs": [
+          "Tylenol",
+          "cetirizine"
+        ],
+        "expected_risk": "None",
+        "actual_risk": "None",
+        "correct": true
+      },
+      {
+        "drugs": [
+          "nitrates",
+          "sildenafil"
+        ],
+        "expected_risk": "High",
+        "actual_risk": "High",
+        "correct": true
+      },
+      {
+        "drugs": [
+          "birth control",
+          "carbamazepine"
+        ],
+        "expected_risk": "High",
+        "actual_risk": "High",
+        "correct": true
+      },
+      {
+        "drugs": [
+          "bactrim",
+          "methotrexate"
+        ],
+        "expected_risk": "High",
+        "actual_risk": "High",
+        "correct": true
+      },
+      {
+        "drugs": [
+          "Synthroid",
+          "calcium carbonate"
+        ],
+        "expected_risk": "Moderate",
+        "actual_risk": "Moderate",
+        "correct": true
+      }
+    ],
     "negatives": [
       {
         "drugs": [
@@ -528,6 +782,48 @@
       {
         "drugs": [
           "acetaminophen",
+          "cetirizine"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "metformin",
+          "amoxicillin"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "albuterol",
+          "loratadine"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "atorvastatin",
+          "aspirin"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "omeprazole",
+          "acetaminophen"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "lisinopril",
+          "metformin"
+        ],
+        "correct": true
+      },
+      {
+        "drugs": [
+          "ibuprofen",
           "cetirizine"
         ],
         "correct": true

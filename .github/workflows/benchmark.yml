@@ -38,6 +38,9 @@ jobs:
       - name: Run deterministic benchmarks
         run: python benchmarks/run_benchmarks.py "$BENCHMARK_ITERATIONS"
 
+      - name: Run model comparison
+        run: python evaluation/run_model_comparison.py
+
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
         with:
@@ -45,3 +48,5 @@ jobs:
           path: |
             benchmarks/results.json
             benchmarks/results.md
+            evaluation/model_comparison_results.json
+            evaluation/model_comparison_results.md

@@ -8,7 +8,9 @@ import numpy as np
 from core.models import get_symptom_encoder
 from core.vector_store import InMemoryVectorStore, VectorStoreItem
 
-DEMO_DATA_PATH = Path(__file__).resolve().parents[2] / "data" / "demo" / "symptom_specialist_cases.json"
+DEMO_DATA_PATH = (
+    Path(__file__).resolve().parents[2] / "data" / "demo" / "symptom_specialist_cases.json"
+)
 
 
 @dataclass
@@ -46,8 +48,7 @@ class SymptomSpecialistEngine:
 
         embeddings = self.encoder.encode(texts, convert_to_numpy=True)
         items = [
-            VectorStoreItem(vector=embeddings[i], label=specialties[i])
-            for i in range(len(texts))
+            VectorStoreItem(vector=embeddings[i], label=specialties[i]) for i in range(len(texts))
         ]
         return InMemoryVectorStore(items)
 
@@ -71,7 +72,9 @@ class SymptomSpecialistEngine:
 
         aggregated: list[RankedSpecialtyResult] = []
         for specialty, scores in scores_by_specialty.items():
-            aggregated.append(RankedSpecialtyResult(specialty=specialty, score=float(np.mean(scores))))
+            aggregated.append(
+                RankedSpecialtyResult(specialty=specialty, score=float(np.mean(scores)))
+            )
 
         aggregated.sort(key=lambda x: x.score, reverse=True)
 

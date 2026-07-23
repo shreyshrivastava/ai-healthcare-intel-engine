@@ -1,0 +1,12 @@
+.git
+.venv
+.venv312
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+logs
+ai-healthcare-intel-engine/data/external/*.csv
+ai-healthcare-intel-engine/data/external/*.zip
+ai-healthcare-intel-engine/data/external/*.parquet

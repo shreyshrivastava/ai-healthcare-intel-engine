@@ -39,4 +39,3 @@ def build_demo_ddi_kg() -> nx.MultiDiGraph:
         )
 
     return g
-

@@ -17,6 +17,15 @@ It demonstrates how to wrap AI-adjacent clinical workflows in reliable software 
 - Deployment target: Streamlit Cloud single-app demo in local deterministic mode
 - Default embedding backend: deterministic keyword encoder
 - Optional local ML backend: `sentence-transformers` via `requirements-ml.txt`
+- Docker: Streamlit and FastAPI Dockerfiles included
+
+## Screenshots
+
+Captured from a local deterministic Streamlit test run.
+
+![Symptom routing workflow](docs/screenshots/streamlit-symptom-routing.png)
+
+![Drug interaction workflow](docs/screenshots/streamlit-drug-interactions.png)
 
 ## Features
 
@@ -27,8 +36,10 @@ It demonstrates how to wrap AI-adjacent clinical workflows in reliable software 
 - Drug-drug interaction lookup backed by a NetworkX knowledge graph
 - RxNorm-style local alias normalization for common medication names
 - FastAPI API with request validation and `/health`
+- Request timing and aggregate API metrics via `/metrics`
 - Streamlit UI that can run standalone without a separate API process
 - Synthetic evaluation and benchmark reports
+- Optional model-comparison script for keyword versus sentence-transformer backends
 - Pytest suite covering APIs, rules, graph lookup, vector search, and data normalizers
 
 ## Architecture
@@ -56,11 +67,12 @@ Evaluation uses synthetic/demo data committed to this repository. These numbers 
 
 Latest measured local run:
 
-- Symptom specialist top-1 accuracy: `100.00%` over `20` cases
-- Symptom specialist top-3 accuracy: `100.00%` over `20` cases
-- Second-opinion risk accuracy: `100.00%` over `20` cases
+- Symptom specialist top-1 accuracy: `100.00%` over `32` cases
+- Symptom specialist top-3 accuracy: `100.00%` over `32` cases
+- Second-opinion risk accuracy: `100.00%` over `32` cases
 - DDI positive recall: `100.00%` over `20` known interactions
-- DDI negative specificity: `100.00%` over `4` negative pairs
+- DDI expanded scenario accuracy: `100.00%` over `5` alias/edge cases
+- DDI negative specificity: `100.00%` over `10` negative pairs
 
 Run:
 
@@ -80,9 +92,9 @@ Latest measured local run using the deterministic keyword backend:
 - Python: `3.14.5`
 - Platform: `macOS-26.5.2-arm64-arm-64bit-Mach-O`
 - Iterations: `10`
-- API app creation median: `0.10 ms`
+- API app creation median: `0.14 ms`
 - Symptom ranking median: `0.03 ms`
-- Second-opinion risk median: `0.04 ms`
+- Second-opinion risk median: `0.03 ms`
 - Drug interaction check median: `0.07 ms`
 
 Run:
@@ -135,6 +147,12 @@ Health check:
 http://localhost:8000/health
 ```
 
+Metrics snapshot:
+
+```text
+http://localhost:8000/metrics
+```
+
 ## Run the Streamlit UI Against the API
 
 ```bash
@@ -152,6 +170,21 @@ HEALTHCARE_EMBEDDING_BACKEND=sentence-transformer streamlit run ai-healthcare-in
 
 Do not enable this path in normal CI or low-resource public deployments.
 
+## Model Comparison
+
+Default comparison records the deterministic keyword backend and documents the optional sentence-transformer backend as skipped:
+
+```bash
+python evaluation/run_model_comparison.py
+```
+
+To include sentence-transformers locally:
+
+```bash
+pip install -r requirements-ml.txt
+RUN_SENTENCE_TRANSFORMER_COMPARISON=1 python evaluation/run_model_comparison.py
+```
+
 ## Configuration
 
 | Variable | Default | Purpose |
@@ -167,6 +200,7 @@ Do not enable this path in normal CI or low-resource public deployments.
 
 ```bash
 ruff check .
+ruff format --check .
 python -m compileall ai-healthcare-intel-engine tests evaluation benchmarks
 pytest
 python evaluation/run_evaluation.py
@@ -189,6 +223,28 @@ Settings:
   - `HEALTHCARE_EMBEDDING_BACKEND=keyword`
 
 This deploys a standalone deterministic demo. Deploy the FastAPI backend separately only if you specifically need API-mode demos.
+
+## Docker
+
+Standalone Streamlit demo:
+
+```bash
+docker build -t healthcare-intel-streamlit .
+docker run --rm -p 8501:8501 healthcare-intel-streamlit
+```
+
+FastAPI backend:
+
+```bash
+docker build -f Dockerfile.api -t healthcare-intel-api .
+docker run --rm -p 8000:8000 healthcare-intel-api
+```
+
+Full API + UI mode:
+
+```bash
+docker compose up --build
+```
 
 ## Privacy and Safety
 
@@ -213,6 +269,7 @@ ai-healthcare-intel-engine/
 benchmarks/                    deterministic benchmark script and results
 docs/                          architecture, deployment, privacy, audit docs
 evaluation/                    synthetic evaluation script and results
+evaluation/datasets/           expanded synthetic evaluation cases
 tests/                         pytest suite
 .github/workflows/             CI and benchmark workflows
 ```

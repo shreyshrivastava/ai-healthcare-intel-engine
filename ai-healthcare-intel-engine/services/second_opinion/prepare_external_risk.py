@@ -46,9 +46,7 @@ def normalize_label(raw: str) -> str | None:
 
 def main() -> None:
     if not RAW_CSV.exists():
-        raise SystemExit(
-            f"Expected CSV at {RAW_CSV}, with columns: report_text,risk_label"
-        )
+        raise SystemExit(f"Expected CSV at {RAW_CSV}, with columns: report_text,risk_label")
 
     cases: list[dict[str, str]] = []
     with RAW_CSV.open("r", encoding="utf-8") as f:
@@ -56,9 +54,7 @@ def main() -> None:
         required = {"report_text", "risk_label"}
         missing = required - set(reader.fieldnames or [])
         if missing:
-            raise SystemExit(
-                f"CSV is missing required columns: {', '.join(sorted(missing))}"
-            )
+            raise SystemExit(f"CSV is missing required columns: {', '.join(sorted(missing))}")
 
         for row in reader:
             text = (row.get("report_text") or "").strip()
@@ -79,4 +75,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

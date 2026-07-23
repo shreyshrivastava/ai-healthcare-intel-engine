@@ -1,0 +1,23 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      HEALTHCARE_EMBEDDING_BACKEND: keyword
+      CORS_ALLOW_ORIGINS: http://localhost:8501
+    ports:
+      - "8000:8000"
+
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      HEALTHCARE_FRONTEND_MODE: api
+      HEALTHCARE_EMBEDDING_BACKEND: keyword
+      API_URL: http://api:8000
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api

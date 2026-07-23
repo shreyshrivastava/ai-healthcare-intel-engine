@@ -17,6 +17,7 @@ flowchart TD
     UI["Streamlit frontend"] --> Mode{"Frontend mode"}
     Mode -- "local" --> Services["Service layer"]
     Mode -- "api" --> API["FastAPI routers"]
+    API --> Obs["Observability middleware<br/>/metrics"]
     API --> Services
     Services --> Symptoms["Symptom specialist engine"]
     Services --> Risk["Second-opinion risk rules"]
@@ -47,5 +48,6 @@ services/second_opinion/model.py              risk stratification rules
 services/drug_interaction/inference.py        DDI lookup and alias normalization
 core/models.py                                keyword or optional sentence-transformer encoder
 core/vector_store.py                          cosine similarity search
+core/observability.py                         request timing and aggregate metrics
 frontend/app.py                               Streamlit app
 ```

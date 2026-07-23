@@ -1,6 +1,6 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["ai-healthcare-intel-engine"]
+pythonpath = [".", "ai-healthcare-intel-engine"]
 markers = [
     "ml: optional local sentence-transformer tests",
 ]

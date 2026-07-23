@@ -52,7 +52,9 @@ def normalize_risk(raw: str) -> str:
 
 def main() -> None:
     if not RAW_CSV.exists():
-        raise SystemExit(f"Expected CSV at {RAW_CSV}, please create it with columns: drug_a,drug_b,risk_level,mechanism")
+        raise SystemExit(
+            f"Expected CSV at {RAW_CSV}, please create it with columns: drug_a,drug_b,risk_level,mechanism"
+        )
 
     pairs: list[dict[str, str]] = []
     with RAW_CSV.open("r", encoding="utf-8") as f:
@@ -87,4 +89,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

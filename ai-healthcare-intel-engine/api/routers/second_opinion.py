@@ -19,4 +19,3 @@ def assess_second_opinion(payload: SecondOpinionRequest) -> SecondOpinionRespons
         second_opinion_recommended=prediction.second_opinion_recommended,
         explanation=explanation,
     )
-

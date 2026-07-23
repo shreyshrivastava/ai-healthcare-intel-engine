@@ -19,6 +19,7 @@ from services.second_opinion.model import assess_report_text  # noqa: E402
 from services.symptom_specialist.model import display_specialty, get_engine  # noqa: E402
 
 DEMO_DIR = APP_ROOT / "data" / "demo"
+EXPANDED_DATASET = ROOT / "evaluation" / "datasets" / "expanded_synthetic_cases.json"
 RESULTS_JSON = ROOT / "evaluation" / "results.json"
 RESULTS_MD = ROOT / "evaluation" / "results.md"
 
@@ -27,8 +28,15 @@ def load_json(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_expanded_cases() -> dict:
+    if not EXPANDED_DATASET.exists():
+        return {}
+    return load_json(EXPANDED_DATASET)
+
+
 def evaluate_symptom_ranking() -> dict:
-    cases = load_json(DEMO_DIR / "symptom_specialist_cases.json")
+    expanded = load_expanded_cases().get("symptom_specialist", [])
+    cases = load_json(DEMO_DIR / "symptom_specialist_cases.json") + expanded
     engine = get_engine()
     rows = []
     top1_hits = 0
@@ -39,7 +47,13 @@ def evaluate_symptom_ranking() -> dict:
         actual = [item.specialty for item in ranked]
         top1_hits += int(bool(actual) and actual[0] == expected)
         top3_hits += int(expected in actual)
-        rows.append({"expected": expected, "actual_top3": actual, "top1": bool(actual and actual[0] == expected)})
+        rows.append(
+            {
+                "expected": expected,
+                "actual_top3": actual,
+                "top1": bool(actual and actual[0] == expected),
+            }
+        )
 
     return {
         "case_count": len(cases),
@@ -50,7 +64,8 @@ def evaluate_symptom_ranking() -> dict:
 
 
 def evaluate_second_opinion() -> dict:
-    cases = load_json(DEMO_DIR / "second_opinion_cases.json")
+    expanded = load_expanded_cases().get("second_opinion", [])
+    cases = load_json(DEMO_DIR / "second_opinion_cases.json") + expanded
     rows = []
     correct = 0
     for case in cases:
@@ -70,6 +85,7 @@ def evaluate_second_opinion() -> dict:
 
 
 def evaluate_drug_interactions() -> dict:
+    expanded = load_expanded_cases()
     pairs = load_json(DEMO_DIR / "ddi_pairs.json")
     positive_correct = 0
     positives = []
@@ -88,12 +104,29 @@ def evaluate_drug_interactions() -> dict:
             }
         )
 
+    expanded_positive_cases = expanded.get("drug_interactions_positive", [])
+    expanded_positive_correct = 0
+    expanded_positives = []
+    for case in expanded_positive_cases:
+        results = check_interactions(case["drugs"])
+        actual_risk = results[0].risk_level if results else "None"
+        is_correct = actual_risk == case["expected_risk"]
+        expanded_positive_correct += int(is_correct)
+        expanded_positives.append(
+            {
+                "drugs": case["drugs"],
+                "expected_risk": case["expected_risk"],
+                "actual_risk": actual_risk,
+                "correct": is_correct,
+            }
+        )
+
     negative_cases = [
         ["metformin", "amoxicillin"],
         ["aspirin", "albuterol"],
         ["lisinopril", "omeprazole"],
         ["acetaminophen", "cetirizine"],
-    ]
+    ] + expanded.get("drug_interactions_negative", [])
     negative_correct = 0
     negatives = []
     for drugs in negative_cases:
@@ -104,10 +137,14 @@ def evaluate_drug_interactions() -> dict:
 
     return {
         "positive_case_count": len(pairs),
+        "expanded_positive_case_count": len(expanded_positive_cases),
         "negative_case_count": len(negative_cases),
         "positive_recall": positive_correct / max(1, len(pairs)),
+        "expanded_positive_accuracy": expanded_positive_correct
+        / max(1, len(expanded_positive_cases)),
         "negative_specificity": negative_correct / max(1, len(negative_cases)),
         "positives": positives,
+        "expanded_positives": expanded_positives,
         "negatives": negatives,
     }
 
@@ -144,6 +181,7 @@ def write_markdown(results: dict, path: Path) -> None:
         f"- Symptom specialist top-3 accuracy: `{symptom['top3_accuracy']:.2%}` over `{symptom['case_count']}` cases",
         f"- Second-opinion risk accuracy: `{second['accuracy']:.2%}` over `{second['case_count']}` cases",
         f"- DDI positive recall: `{ddi['positive_recall']:.2%}` over `{ddi['positive_case_count']}` known interactions",
+        f"- DDI expanded scenario accuracy: `{ddi['expanded_positive_accuracy']:.2%}` over `{ddi['expanded_positive_case_count']}` alias/edge cases",
         f"- DDI negative specificity: `{ddi['negative_specificity']:.2%}` over `{ddi['negative_case_count']}` negative pairs",
         "",
     ]
@@ -160,6 +198,7 @@ def main() -> int:
         results["symptom_specialist"]["top3_accuracy"] >= 0.80,
         results["second_opinion"]["accuracy"] >= 0.80,
         results["drug_interactions"]["positive_recall"] >= 1.00,
+        results["drug_interactions"]["expanded_positive_accuracy"] >= 1.00,
         results["drug_interactions"]["negative_specificity"] >= 1.00,
     ]
     return 0 if all(checks) else 1

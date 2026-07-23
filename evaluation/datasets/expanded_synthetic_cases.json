@@ -1,0 +1,132 @@
+{
+  "symptom_specialist": [
+    {
+      "text": "pressure-like chest pain with shortness of breath and elevated blood pressure",
+      "specialty": "Cardiology"
+    },
+    {
+      "text": "wheezing cough and difficulty breathing that worsens at night",
+      "specialty": "Pulmonology"
+    },
+    {
+      "text": "increased thirst frequent urination fatigue and high blood sugar",
+      "specialty": "Endocrinology"
+    },
+    {
+      "text": "headaches dizziness vision problems and numbness in the feet",
+      "specialty": "Neurology"
+    },
+    {
+      "text": "joint pain swelling and morning stiffness in both hands",
+      "specialty": "Rheumatology"
+    },
+    {
+      "text": "abdominal pain nausea vomiting and fever",
+      "specialty": "Gastroenterology"
+    },
+    {
+      "text": "flank pain blood in urine and painful urination",
+      "specialty": "Urology"
+    },
+    {
+      "text": "pelvic pain irregular menstrual cycles and hot flashes",
+      "specialty": "Gynecology"
+    },
+    {
+      "text": "irregular skin lesion with changing color and itching",
+      "specialty": "Dermatology"
+    },
+    {
+      "text": "hearing loss ringing in ears and persistent sinus pressure",
+      "specialty": "Otolaryngology"
+    },
+    {
+      "text": "delayed milestone development poor growth and recurrent infections",
+      "specialty": "Pediatrics"
+    },
+    {
+      "text": "memory loss confusion and personality changes",
+      "specialty": "Geriatrics"
+    }
+  ],
+  "second_opinion": [
+    {
+      "report_text": "Patient with septic shock on vasopressors and ventilator support in ICU.",
+      "risk_label": "High"
+    },
+    {
+      "report_text": "Subarachnoid hemorrhage with altered mental status and neuro ICU admission.",
+      "risk_label": "High"
+    },
+    {
+      "report_text": "Status epilepticus requiring intubated airway protection.",
+      "risk_label": "High"
+    },
+    {
+      "report_text": "Acute pulmonary embolism with right heart strain.",
+      "risk_label": "High"
+    },
+    {
+      "report_text": "Multiple comorbidities with surgery planned and poorly controlled diabetes.",
+      "risk_label": "Medium"
+    },
+    {
+      "report_text": "Acute kidney injury with creatinine elevation after dehydration.",
+      "risk_label": "Medium"
+    },
+    {
+      "report_text": "Type 2 diabetes with microalbuminuria starting ACE inhibitor therapy.",
+      "risk_label": "Medium"
+    },
+    {
+      "report_text": "Cirrhosis with moderate ascites and hemodynamically stable paracentesis.",
+      "risk_label": "Medium"
+    },
+    {
+      "report_text": "Mild asthma exacerbation with normal vitals and no ICU care.",
+      "risk_label": "Low"
+    },
+    {
+      "report_text": "Minor laceration closed with sutures and no sign of infection.",
+      "risk_label": "Low"
+    },
+    {
+      "report_text": "Routine hypertension follow-up with stable blood pressure and no new complaints.",
+      "risk_label": "Low"
+    },
+    {
+      "report_text": "Viral URI symptoms with clear chest X-ray and normal vitals.",
+      "risk_label": "Low"
+    }
+  ],
+  "drug_interactions_positive": [
+    {
+      "drugs": ["Tylenol", "cetirizine"],
+      "expected_risk": "None"
+    },
+    {
+      "drugs": ["nitrates", "sildenafil"],
+      "expected_risk": "High"
+    },
+    {
+      "drugs": ["birth control", "carbamazepine"],
+      "expected_risk": "High"
+    },
+    {
+      "drugs": ["bactrim", "methotrexate"],
+      "expected_risk": "High"
+    },
+    {
+      "drugs": ["Synthroid", "calcium carbonate"],
+      "expected_risk": "Moderate"
+    }
+  ],
+  "drug_interactions_negative": [
+    ["metformin", "amoxicillin"],
+    ["albuterol", "loratadine"],
+    ["atorvastatin", "aspirin"],
+    ["omeprazole", "acetaminophen"],
+    ["lisinopril", "metformin"],
+    ["ibuprofen", "cetirizine"]
+  ]
+}

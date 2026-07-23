@@ -11,6 +11,16 @@ def test_health_endpoint():
     assert response.json() == {"status": "ok"}
 
 
+def test_metrics_endpoint_tracks_requests():
+    client.get("/health")
+    response = client.get("/metrics")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["request_count"] >= 1
+    assert "GET /health" in data["paths"]
+
+
 def test_symptom_specialist_endpoint():
     response = client.post(
         "/symptom-specialist/predict",
