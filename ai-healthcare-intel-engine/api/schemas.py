@@ -1,49 +1,56 @@
-from typing import List, Optional
+from typing import Annotated
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints
+
+ClinicalText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=3)]
+DrugName = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)]
 
 
-class SymptomSpecialistRequest(BaseModel):
+class APIModel(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+
+class SymptomSpecialistRequest(APIModel):
     resourceType: str = Field(default="Observation", description="HL7 FHIR Resource Type")
-    symptoms_text: str
+    symptoms_text: ClinicalText = Field(..., max_length=2000)
 
 
-class RankedSpecialty(BaseModel):
+class RankedSpecialty(APIModel):
     specialty: str
-    score: float
+    score: float = Field(..., ge=-1.0, le=1.0)
 
 
-class SymptomSpecialistResponse(BaseModel):
+class SymptomSpecialistResponse(APIModel):
     resourceType: str = Field(default="Bundle", description="HL7 FHIR Resource Type")
-    ranked_specialties: List[RankedSpecialty]
-    explanation: Optional[str] = None
+    ranked_specialties: list[RankedSpecialty]
+    explanation: str | None = None
 
 
-class SecondOpinionRequest(BaseModel):
+class SecondOpinionRequest(APIModel):
     resourceType: str = Field(default="DiagnosticReport", description="HL7 FHIR Resource Type")
-    report_text: str
+    report_text: ClinicalText = Field(..., max_length=5000)
 
 
-class SecondOpinionResponse(BaseModel):
+class SecondOpinionResponse(APIModel):
     resourceType: str = Field(default="RiskAssessment", description="HL7 FHIR Resource Type")
     risk_level: str
     second_opinion_recommended: bool
-    explanation: Optional[str] = None
+    explanation: str | None = None
 
 
-class DrugInteractionsRequest(BaseModel):
+class DrugInteractionsRequest(APIModel):
     resourceType: str = Field(default="MedicationStatement", description="HL7 FHIR Resource Type")
-    drugs: List[str]
+    drugs: list[DrugName] = Field(..., min_length=2, max_length=20)
 
 
-class DrugInteractionPair(BaseModel):
+class DrugInteractionPair(APIModel):
     drug_a: str
     drug_b: str
     risk_level: str
-    explanation: Optional[str] = None
+    explanation: str | None = None
 
 
-class DrugInteractionsResponse(BaseModel):
+class DrugInteractionsResponse(APIModel):
     resourceType: str = Field(default="ClinicalImpression", description="HL7 FHIR Resource Type")
     overall_risk: str
-    interactions: List[DrugInteractionPair]
+    interactions: list[DrugInteractionPair]

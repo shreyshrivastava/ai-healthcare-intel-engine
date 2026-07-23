@@ -1,0 +1,2 @@
+-r ai-healthcare-intel-engine/requirements.txt
+-r ai-healthcare-intel-engine/requirements-dev.txt

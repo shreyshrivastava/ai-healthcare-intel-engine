@@ -1,24 +1,40 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
-from typing import List, Tuple
-
 
 HIGH_RISK_KEYWORDS = [
+    "acute pulmonary embolism",
+    "altered mental status",
+    "hemoglobin dropped",
+    "high-flow nasal cannula",
+    "intubated",
     "metastatic",
-    "septic shock",
-    "sepsis",
-    "multi organ failure",
-    "intensive care",
-    "icu",
-    "ventilator",
-    "stroke",
     "myocardial infarction",
+    "metastatic",
+    "multi organ failure",
+    "neutropenic fever",
+    "sepsis",
+    "septic shock",
+    "status epilepticus",
+    "stroke",
+    "subarachnoid hemorrhage",
+    "intensive care",
+    "ventilator",
+    "vasopressors",
+    "icu",
 ]
 
 MEDIUM_RISK_KEYWORDS = [
-    "multiple comorbidities",
+    "acute appendicitis",
+    "acute kidney injury",
+    "atrial fibrillation",
+    "cirrhosis",
     "complicated",
+    "creatinine",
+    "microalbuminuria",
+    "moderate ascites",
+    "multiple comorbidities",
     "poorly controlled",
     "recurrent",
     "surgery planned",
@@ -29,13 +45,13 @@ MEDIUM_RISK_KEYWORDS = [
 class SecondOpinionPrediction:
     risk_level: str
     second_opinion_recommended: bool
-    contributing_phrases: List[str]
+    contributing_phrases: list[str]
 
 
 def assess_report_text(report_text: str) -> SecondOpinionPrediction:
-    text = report_text.lower()
-    hits_high = [k for k in HIGH_RISK_KEYWORDS if k in text]
-    hits_medium = [k for k in MEDIUM_RISK_KEYWORDS if k in text]
+    text = _normalize_text(report_text)
+    hits_high = [keyword for keyword in HIGH_RISK_KEYWORDS if _phrase_present(text, keyword)]
+    hits_medium = [keyword for keyword in MEDIUM_RISK_KEYWORDS if _phrase_present(text, keyword)]
 
     if hits_high:
         return SecondOpinionPrediction(
@@ -56,3 +72,16 @@ def assess_report_text(report_text: str) -> SecondOpinionPrediction:
         contributing_phrases=[],
     )
 
+
+def _normalize_text(text: str) -> str:
+    return re.sub(r"\s+", " ", text.lower()).strip()
+
+
+def _phrase_present(text: str, phrase: str) -> bool:
+    pattern = rf"(?<![a-z0-9]){re.escape(phrase)}(?![a-z0-9])"
+    for match in re.finditer(pattern, text):
+        prefix = text[max(0, match.start() - 24) : match.start()]
+        if re.search(r"\b(no|without|denies|negative for)\s+$", prefix):
+            continue
+        return True
+    return False

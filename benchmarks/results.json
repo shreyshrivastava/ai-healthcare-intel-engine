@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-07-23T18:43:24.213616+00:00",
+  "environment": {
+    "python": "3.14.5",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "embedding_backend": "keyword"
+  },
+  "methodology": {
+    "iterations": 10,
+    "data": "Synthetic symptoms, report text, and medication list.",
+    "model_downloads": "None in default keyword backend mode."
+  },
+  "api_app_creation": {
+    "runs": 10,
+    "min_ms": 0.12129099923186004,
+    "median_ms": 0.14127100439509377,
+    "max_ms": 0.26166599127463996,
+    "mean_ms": 0.17141230055131018
+  },
+  "symptom_ranking": {
+    "runs": 10,
+    "min_ms": 0.026749999960884452,
+    "median_ms": 0.03177100734319538,
+    "max_ms": 0.07187500887084752,
+    "mean_ms": 0.03961660258937627
+  },
+  "second_opinion": {
+    "runs": 10,
+    "min_ms": 0.031624993425793946,
+    "median_ms": 0.03491650568321347,
+    "max_ms": 0.6076249992474914,
+    "mean_ms": 0.0924456981010735
+  },
+  "drug_interactions": {
+    "runs": 10,
+    "min_ms": 0.06866599142085761,
+    "median_ms": 0.07287499465746805,
+    "max_ms": 0.31466700602322817,
+    "mean_ms": 0.10214579961029813
+  }
+}

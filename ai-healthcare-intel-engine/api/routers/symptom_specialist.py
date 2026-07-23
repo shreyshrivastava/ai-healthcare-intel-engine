@@ -1,8 +1,6 @@
-from fastapi import APIRouter
-
 from api.schemas import SymptomSpecialistRequest, SymptomSpecialistResponse
+from fastapi import APIRouter
 from services.symptom_specialist.retriever import predict_ranked_specialties
-
 
 router = APIRouter()
 
@@ -15,4 +13,3 @@ def predict_specialist(payload: SymptomSpecialistRequest) -> SymptomSpecialistRe
         "Scores reflect embedding similarity to historical-like cases."
     )
     return SymptomSpecialistResponse(ranked_specialties=ranked, explanation=explanation)
-

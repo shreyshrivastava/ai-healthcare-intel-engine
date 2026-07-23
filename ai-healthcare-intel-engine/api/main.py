@@ -1,7 +1,16 @@
-from fastapi import FastAPI
+import os
+
+from core.observability import metrics_snapshot, perf_counter_ms, record_request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import symptom_specialist, second_opinion, drug_interaction
+from .routers import drug_interaction, second_opinion, symptom_specialist
+
+
+def allowed_cors_origins() -> list[str]:
+    raw_origins = os.getenv("CORS_ALLOW_ORIGINS", "*")
+    origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+    return origins or ["*"]
 
 
 def create_app() -> FastAPI:
@@ -11,21 +20,53 @@ def create_app() -> FastAPI:
         description="Symptom-to-specialist, second-opinion risk, and drug interaction intelligence APIs.",
     )
 
+    origins = allowed_cors_origins()
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
+        allow_origins=origins,
+        allow_credentials="*" not in origins,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-    app.include_router(symptom_specialist.router, prefix="/symptom-specialist", tags=["symptom-specialist"])
+    app.include_router(
+        symptom_specialist.router,
+        prefix="/symptom-specialist",
+        tags=["symptom-specialist"],
+    )
     app.include_router(second_opinion.router, prefix="/second-opinion", tags=["second-opinion"])
-    app.include_router(drug_interaction.router, prefix="/drug-interactions", tags=["drug-interactions"])
+    app.include_router(
+        drug_interaction.router,
+        prefix="/drug-interactions",
+        tags=["drug-interactions"],
+    )
+
+    @app.middleware("http")
+    async def record_request_metrics(request: Request, call_next):
+        start_ms = perf_counter_ms()
+        status_code = 500
+        try:
+            response = await call_next(request)
+            status_code = response.status_code
+            return response
+        finally:
+            duration_ms = perf_counter_ms() - start_ms
+            record_request(request.method, request.url.path, status_code, duration_ms)
 
     @app.get("/")
     def root():
-        return {"status": "ok", "message": "AI Healthcare Intelligence Engine API is running. Visit /docs for documentation."}
+        return {
+            "status": "ok",
+            "message": "AI Healthcare Intelligence Engine API is running. Visit /docs for documentation.",
+        }
+
+    @app.get("/health")
+    def health():
+        return {"status": "ok"}
+
+    @app.get("/metrics")
+    def metrics():
+        return metrics_snapshot()
 
     return app
 

@@ -5,7 +5,6 @@ from pathlib import Path
 
 import networkx as nx
 
-
 DEMO_DDI_PAIRS_PATH = Path(__file__).resolve().parents[2] / "data" / "demo" / "ddi_pairs.json"
 
 
@@ -40,4 +39,3 @@ def build_demo_ddi_kg() -> nx.MultiDiGraph:
         )
 
     return g
-

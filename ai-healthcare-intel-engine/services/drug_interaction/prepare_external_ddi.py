@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """
 Utility script to convert a real public DDI dataset into the simple
 `ddi_pairs.json` schema that the demo knowledge graph uses.
@@ -25,18 +23,18 @@ Workflow (example with a CSV you prepare yourself):
 This keeps the serving code decoupled from any particular dataset format.
 """
 
+from __future__ import annotations
+
 import csv
 import json
 from pathlib import Path
-from typing import Dict, List
-
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW_CSV = ROOT / "data" / "external" / "raw_ddi.csv"
 OUT_JSON = ROOT / "data" / "demo" / "ddi_pairs.json"
 
 
-RISK_MAPPING: Dict[str, str] = {
+RISK_MAPPING: dict[str, str] = {
     "contraindicated": "High",
     "major": "High",
     "serious": "High",
@@ -54,9 +52,11 @@ def normalize_risk(raw: str) -> str:
 
 def main() -> None:
     if not RAW_CSV.exists():
-        raise SystemExit(f"Expected CSV at {RAW_CSV}, please create it with columns: drug_a,drug_b,risk_level,mechanism")
+        raise SystemExit(
+            f"Expected CSV at {RAW_CSV}, please create it with columns: drug_a,drug_b,risk_level,mechanism"
+        )
 
-    pairs: List[Dict[str, str]] = []
+    pairs: list[dict[str, str]] = []
     with RAW_CSV.open("r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         required = {"drug_a", "drug_b", "risk_level", "mechanism"}
@@ -89,4 +89,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

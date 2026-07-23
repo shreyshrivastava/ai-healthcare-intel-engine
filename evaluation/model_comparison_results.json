@@ -1,0 +1,312 @@
+{
+  "generated_at": "2026-07-23T18:43:23.989520+00:00",
+  "environment": {
+    "python": "3.14.5",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "backends": [
+    {
+      "name": "keyword",
+      "status": "measured",
+      "metrics": {
+        "case_count": 32,
+        "top1_accuracy": 1.0,
+        "top3_accuracy": 1.0,
+        "cases": [
+          {
+            "expected": "Cardiology",
+            "actual_top3": [
+              "Cardiology",
+              "Neurology",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Pulmonology",
+            "actual_top3": [
+              "Pulmonology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Endocrinology",
+            "actual_top3": [
+              "Endocrinology",
+              "Urology",
+              "Oncology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Neurology",
+            "actual_top3": [
+              "Neurology",
+              "Ophthalmology",
+              "Cardiology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Rheumatology",
+            "actual_top3": [
+              "Rheumatology",
+              "Allergy/Immunology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Gastroenterology",
+            "actual_top3": [
+              "Gastroenterology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Urology",
+            "actual_top3": [
+              "Urology",
+              "Endocrinology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Gynecology",
+            "actual_top3": [
+              "Gynecology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Dermatology",
+            "actual_top3": [
+              "Dermatology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Psychiatry",
+            "actual_top3": [
+              "Psychiatry",
+              "Pediatrics",
+              "Pulmonology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Ophthalmology",
+            "actual_top3": [
+              "Ophthalmology",
+              "Neurology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Otolaryngology",
+            "actual_top3": [
+              "Otolaryngology",
+              "Geriatrics",
+              "Dermatology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Oncology",
+            "actual_top3": [
+              "Oncology",
+              "Endocrinology",
+              "Infectious Disease"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Infectious Disease",
+            "actual_top3": [
+              "Infectious Disease",
+              "Pediatrics",
+              "Oncology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Neurology",
+            "actual_top3": [
+              "Neurology",
+              "Geriatrics",
+              "Dermatology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Cardiology",
+            "actual_top3": [
+              "Cardiology",
+              "Geriatrics",
+              "Dermatology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Orthopedics",
+            "actual_top3": [
+              "Orthopedics",
+              "Geriatrics",
+              "Dermatology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Allergy/Immunology",
+            "actual_top3": [
+              "Allergy/Immunology",
+              "Rheumatology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Pediatrics",
+            "actual_top3": [
+              "Pediatrics",
+              "Infectious Disease",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Geriatrics",
+            "actual_top3": [
+              "Geriatrics",
+              "Pediatrics",
+              "Pulmonology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Cardiology",
+            "actual_top3": [
+              "Cardiology",
+              "Neurology",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Pulmonology",
+            "actual_top3": [
+              "Pulmonology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Endocrinology",
+            "actual_top3": [
+              "Endocrinology",
+              "Urology",
+              "Oncology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Neurology",
+            "actual_top3": [
+              "Neurology",
+              "Ophthalmology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Rheumatology",
+            "actual_top3": [
+              "Rheumatology",
+              "Allergy/Immunology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Gastroenterology",
+            "actual_top3": [
+              "Gastroenterology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Urology",
+            "actual_top3": [
+              "Urology",
+              "Endocrinology",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Gynecology",
+            "actual_top3": [
+              "Gynecology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Dermatology",
+            "actual_top3": [
+              "Dermatology",
+              "Geriatrics",
+              "Pediatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Otolaryngology",
+            "actual_top3": [
+              "Otolaryngology",
+              "Geriatrics",
+              "Dermatology"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Pediatrics",
+            "actual_top3": [
+              "Pediatrics",
+              "Infectious Disease",
+              "Geriatrics"
+            ],
+            "top1": true
+          },
+          {
+            "expected": "Geriatrics",
+            "actual_top3": [
+              "Geriatrics",
+              "Pediatrics",
+              "Pulmonology"
+            ],
+            "top1": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "sentence-transformer",
+      "status": "skipped",
+      "reason": "Set RUN_SENTENCE_TRANSFORMER_COMPARISON=1 after installing requirements-ml.txt."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "project_name": "AI Healthcare Intelligence Engine",
+  "repository": "https://github.com/shreyshrivastava/ai-healthcare-intel-engine",
+  "resume_decision": "Supporting resume project",
+  "initial_score": 4.2,
+  "final_score": 8.4,
+  "target_roles": [
+    "Applied AI Engineer",
+    "AI Engineer",
+    "LLM Engineer",
+    "Generative AI Engineer",
+    "Machine Learning Engineer",
+    "AI Data Engineer",
+    "Python Backend Engineer"
+  ],
+  "scores": {
+    "technical_depth": 7,
+    "software_engineering_quality": 8,
+    "ai_ml_relevance": 7,
+    "product_usefulness": 8,
+    "reliability": 8,
+    "documentation": 9,
+    "deployment_readiness": 9,
+    "testing_quality": 8,
+    "originality": 6,
+    "resume_value": 8
+  },
+  "live_url": "https://healthcare-intel-engine-shrey.streamlit.app/",
+  "ci_status": "Passing on GitHub Actions run 30036247651 for agent/healthcare-intel-audit-upgrades",
+  "deployment_status": "Deployed to Streamlit Cloud from streamlit-cloud branch and verified with a live no-cookie browser test",
+  "benchmark_summary": {
+    "iterations": 10,
+    "embedding_backend": "keyword",
+    "api_app_creation_median_ms": 0.14,
+    "symptom_ranking_median_ms": 0.03,
+    "second_opinion_median_ms": 0.03,
+    "drug_interactions_median_ms": 0.07
+  },
+  "evaluation_summary": {
+    "symptom_top1_accuracy": 1.0,
+    "symptom_top3_accuracy": 1.0,
+    "second_opinion_accuracy": 1.0,
+    "ddi_positive_recall": 1.0,
+    "ddi_expanded_scenario_accuracy": 1.0,
+    "ddi_negative_specificity": 1.0,
+    "symptom_case_count": 32,
+    "second_opinion_case_count": 32,
+    "ddi_known_positive_count": 20,
+    "ddi_expanded_positive_count": 5,
+    "ddi_negative_count": 10
+  },
+  "resume_bullets": [
+    "Built a three-module healthcare AI demo with FastAPI endpoints and a Streamlit UI for symptom-specialist routing, second-opinion risk, and drug-drug interaction lookup.",
+    "Added deterministic CI/cloud fallback for symptom ranking while preserving optional sentence-transformer embeddings for local ML experimentation.",
+    "Implemented API validation, graph-based DDI lookup, RxNorm-style alias normalization, synthetic evaluation, model comparison, latency benchmarks, observability, Docker, and GitHub Actions CI.",
+    "Documented privacy, healthcare safety boundaries, deployment tradeoffs, and limitations to avoid unsupported clinical claims."
+  ],
+  "remaining_tasks": [
+    "Open PR and merge upgrade branch into main",
+    "Optionally repoint Streamlit Cloud from streamlit-cloud to main after merge",
+    "Expand evaluation with larger licensed datasets"
+  ]
+}
