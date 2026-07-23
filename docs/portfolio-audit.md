@@ -2,9 +2,9 @@
 
 ## Executive Summary
 
-The project is now a credible supporting AI engineering portfolio project. Its strongest evidence is not model novelty; it is the practical engineering around safe healthcare AI demos: deterministic fallback, API validation, CI-safe tests, synthetic evaluation, model-comparison hooks, latency benchmarks, privacy documentation, observability, screenshots, and deployment readiness.
+The project is now a credible supporting AI engineering portfolio project. Its strongest evidence is not model novelty; it is the practical engineering around safe healthcare AI demos: deterministic fallback, API validation, CI-safe tests, synthetic evaluation, model-comparison hooks, latency benchmarks, privacy documentation, observability, screenshots, CI, and verified Streamlit deployment.
 
-Initial estimated score: 4.2/10. Final estimated score after this pass: 8.0/10.
+Initial estimated score: 4.2/10. Final estimated score after this pass: 8.4/10.
 
 ## Resume Decision
 
@@ -32,7 +32,7 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 | Product usefulness | 8 |
 | Reliability | 8 |
 | Documentation | 9 |
-| Deployment readiness | 8 |
+| Deployment readiness | 9 |
 | Testing quality | 8 |
 | Originality | 6 |
 | Resume value | 8 |
@@ -46,12 +46,13 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 - Synthetic evaluation and latency benchmarks committed as reproducible scripts.
 - Privacy and clinical-safety limitations documented clearly.
 - Streamlit screenshots captured from an actual local UI test run.
+- Verified Streamlit Cloud live demo running in deterministic local mode.
 
 ## Weaknesses
 
 - Synthetic data is small and not clinically representative.
 - Evaluation currently measures regression behavior, not real-world clinical accuracy.
-- No public deployment has been verified yet.
+- Evaluation remains synthetic, so the live demo should be positioned as a portfolio demo rather than clinical tooling.
 - No durable monitoring, audit logging, authentication, or HIPAA-grade controls.
 - DDI graph is not comprehensive.
 
@@ -67,6 +68,7 @@ It supports Applied AI Engineer, AI Engineer, LLM/GenAI Engineer, Machine Learni
 - Fixed DDI normalized generic lookup for levothyroxine/Synthroid.
 - Added pytest suite, evaluation script, benchmark script, CI, benchmark workflow, README, docs, audit JSON, and MIT license.
 - Added expanded synthetic evaluation cases, model-comparison script, API observability, Dockerfiles, and improved Streamlit UI.
+- Pushed the upgrade branch, verified GitHub Actions CI, deployed Streamlit Cloud, and validated a live cloud prediction flow.
 
 ## Tests
 
@@ -104,19 +106,23 @@ Environment: Python 3.14.5 on macOS 26.5.2 arm64, keyword backend, 10 iterations
 
 ## Deployment
 
-Prepared for Streamlit Cloud standalone deployment.
+Deployed to Streamlit Cloud in standalone deterministic mode:
 
-Dockerfiles were added for Streamlit and FastAPI. Local Docker image builds were not run in this environment because the `docker` CLI is not installed.
+```text
+https://healthcare-intel-engine-shrey.streamlit.app/
+```
+
+Dockerfiles were added for Streamlit and FastAPI. Docker builds passed in GitHub Actions.
 
 ## Live URL
 
-No verified live URL yet.
+https://healthcare-intel-engine-shrey.streamlit.app/
 
 ## CI/CD
 
 Added GitHub Actions CI and benchmark workflows.
 
-CI runs dependency install, ruff linting, ruff formatting checks, compileall, pytest, evaluation, model-comparison smoke, benchmark smoke, and Docker build validation in deterministic keyword mode.
+CI passed on the pushed `agent/healthcare-intel-audit-upgrades` branch. It runs dependency install, ruff linting, ruff formatting checks, compileall, pytest, evaluation, model-comparison smoke, benchmark smoke, and Docker build validation in deterministic keyword mode.
 
 ## Security and Privacy
 
@@ -139,10 +145,10 @@ AI Healthcare Intelligence Engine: built a FastAPI and Streamlit clinical decisi
 
 ## Remaining Limitations
 
-- Needs public Streamlit deployment.
+- The upgrade branch still needs to be merged into `main`.
 - Needs larger licensed datasets before stronger ML quality claims.
 - Needs real observability and auth before any production-like healthcare positioning.
 
 ## Recommended Next Step
 
-Push this branch, open a PR, verify GitHub Actions, then deploy the Streamlit app in local deterministic mode.
+Open/merge a PR from `agent/healthcare-intel-audit-upgrades`, then either keep the `streamlit-cloud` branch as the deployment branch or repoint Streamlit Cloud to `main`.

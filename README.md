@@ -12,8 +12,8 @@ It demonstrates how to wrap AI-adjacent clinical workflows in reliable software 
 
 ## Current Status
 
-- Live demo: not deployed yet
-- CI: configured in `.github/workflows/ci.yml`
+- Live demo: [healthcare-intel-engine-shrey.streamlit.app](https://healthcare-intel-engine-shrey.streamlit.app/)
+- CI: passing on GitHub Actions for `agent/healthcare-intel-audit-upgrades`
 - Deployment target: Streamlit Cloud single-app demo in local deterministic mode
 - Default embedding backend: deterministic keyword encoder
 - Optional local ML backend: `sentence-transformers` via `requirements-ml.txt`
@@ -21,7 +21,9 @@ It demonstrates how to wrap AI-adjacent clinical workflows in reliable software 
 
 ## Screenshots
 
-Captured from a local deterministic Streamlit test run.
+Captured from deterministic Streamlit test runs.
+
+![Live Streamlit Cloud symptom routing workflow](docs/screenshots/streamlit-cloud-live-test.png)
 
 ![Symptom routing workflow](docs/screenshots/streamlit-symptom-routing.png)
 
@@ -216,13 +218,19 @@ Recommended free deployment: Streamlit Cloud.
 Settings:
 
 - Repository: `shreyshrivastava/ai-healthcare-intel-engine`
-- Branch: `main` after merge
+- Branch: `streamlit-cloud` currently; `main` after merge
 - Main file path: `ai-healthcare-intel-engine/frontend/app.py`
 - Environment:
   - `HEALTHCARE_FRONTEND_MODE=local`
   - `HEALTHCARE_EMBEDDING_BACKEND=keyword`
 
 This deploys a standalone deterministic demo. Deploy the FastAPI backend separately only if you specifically need API-mode demos.
+
+Verified live app:
+
+```text
+https://healthcare-intel-engine-shrey.streamlit.app/
+```
 
 ## Docker
 

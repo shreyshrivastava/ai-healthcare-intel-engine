@@ -7,7 +7,7 @@ Use Streamlit Cloud for the portfolio demo.
 Settings:
 
 - Repository: `shreyshrivastava/ai-healthcare-intel-engine`
-- Branch: `main` after merge
+- Branch: `streamlit-cloud` currently; `main` after merge
 - Main file path: `ai-healthcare-intel-engine/frontend/app.py`
 - Environment:
   - `HEALTHCARE_FRONTEND_MODE=local`
@@ -64,11 +64,15 @@ Metrics snapshot:
 
 ## Current Live URL
 
-No public live URL has been verified for this repository yet.
+Verified Streamlit Cloud URL:
+
+```text
+https://healthcare-intel-engine-shrey.streamlit.app/
+```
+
+The live app was tested in deterministic standalone mode and in a fresh browser profile without existing Streamlit cookies.
 
 ## Manual Steps Remaining
 
-1. Push and merge the upgrade branch.
-2. Create or update the Streamlit Cloud app with the settings above.
-3. Verify the rendered app loads without authentication.
-4. Update the README live-demo field with the verified URL.
+1. Merge the upgrade branch into `main`.
+2. Update the Streamlit Cloud app from `streamlit-cloud` to `main` after merge, or keep `streamlit-cloud` as the deployment branch.

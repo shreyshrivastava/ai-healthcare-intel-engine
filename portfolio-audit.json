@@ -3,7 +3,7 @@
   "repository": "https://github.com/shreyshrivastava/ai-healthcare-intel-engine",
   "resume_decision": "Supporting resume project",
   "initial_score": 4.2,
-  "final_score": 8.0,
+  "final_score": 8.4,
   "target_roles": [
     "Applied AI Engineer",
     "AI Engineer",
@@ -20,14 +20,14 @@
     "product_usefulness": 8,
     "reliability": 8,
     "documentation": 9,
-    "deployment_readiness": 8,
+    "deployment_readiness": 9,
     "testing_quality": 8,
     "originality": 6,
     "resume_value": 8
   },
-  "live_url": "",
-  "ci_status": "Configured locally; not pushed yet",
-  "deployment_status": "Prepared for Streamlit Cloud deterministic local mode and Docker-based hosting; public URL not verified",
+  "live_url": "https://healthcare-intel-engine-shrey.streamlit.app/",
+  "ci_status": "Passing on GitHub Actions run 30036247651 for agent/healthcare-intel-audit-upgrades",
+  "deployment_status": "Deployed to Streamlit Cloud from streamlit-cloud branch and verified with a live no-cookie browser test",
   "benchmark_summary": {
     "iterations": 10,
     "embedding_backend": "keyword",
@@ -56,10 +56,8 @@
     "Documented privacy, healthcare safety boundaries, deployment tradeoffs, and limitations to avoid unsupported clinical claims."
   ],
   "remaining_tasks": [
-    "Push branch after user approval",
-    "Open PR and verify GitHub Actions",
-    "Deploy Streamlit Cloud app in local deterministic mode",
-    "Verify Docker builds in GitHub Actions or on a machine with Docker",
+    "Open PR and merge upgrade branch into main",
+    "Optionally repoint Streamlit Cloud from streamlit-cloud to main after merge",
     "Expand evaluation with larger licensed datasets"
   ]
 }
