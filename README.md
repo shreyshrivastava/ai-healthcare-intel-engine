@@ -6,7 +6,7 @@ This is a portfolio project, not a medical device and not medical advice. It use
 
 ## Why This Project Matters
 
-Healthcare AI projects are easy to overclaim. This project is useful on a resume because it shows the opposite habit: clear safety boundaries, deterministic fallback behavior, input validation, synthetic evaluation, latency benchmarks, API tests, and deployment-aware engineering.
+Healthcare AI projects are easy to overclaim. This project shows the opposite habit: clear safety boundaries, deterministic fallback behavior, input validation, synthetic evaluation, latency benchmarks, API tests, and deployment-aware engineering.
 
 It demonstrates how to wrap AI-adjacent clinical workflows in reliable software instead of depending on an opaque model for every decision.
 
@@ -280,20 +280,6 @@ evaluation/                    synthetic evaluation script and results
 evaluation/datasets/           expanded synthetic evaluation cases
 tests/                         pytest suite
 .github/workflows/             CI and benchmark workflows
-```
-
-## Resume Positioning
-
-Best title:
-
-```text
-AI Healthcare Intelligence Engine
-```
-
-One-line description:
-
-```text
-Built a FastAPI and Streamlit clinical decision-support demo with deterministic symptom ranking, explainable risk stratification, DDI graph lookup, CI-safe evaluation, and deployment-ready fallback behavior.
 ```
 
 ## License
