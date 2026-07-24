@@ -111,8 +111,7 @@ def write_markdown(results: dict, path: Path) -> None:
                 "",
                 f"- Median latency: `{stats['median_ms']:.2f} ms`",
                 f"- Mean latency: `{stats['mean_ms']:.2f} ms`",
-                f"- Min/Max latency: `{stats['min_ms']:.2f} ms` / "
-                f"`{stats['max_ms']:.2f} ms`",
+                f"- Min/Max latency: `{stats['min_ms']:.2f} ms` / `{stats['max_ms']:.2f} ms`",
                 "",
             ]
         )
