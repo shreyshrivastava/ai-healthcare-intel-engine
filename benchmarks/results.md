@@ -10,26 +10,28 @@ These are one-machine synthetic benchmarks for regression tracking, not producti
 
 ## Latency
 
+Median, mean, min, and max values are latency measurements in milliseconds. They are not accuracy scores.
+
 ### API app creation
 
-- Median: `0.14 ms`
-- Mean: `0.17 ms`
-- Min/Max: `0.12 ms` / `0.26 ms`
+- Median latency: `0.14 ms`
+- Mean latency: `0.17 ms`
+- Min/Max latency: `0.12 ms` / `0.26 ms`
 
 ### Symptom ranking
 
-- Median: `0.03 ms`
-- Mean: `0.04 ms`
-- Min/Max: `0.03 ms` / `0.07 ms`
+- Median latency: `0.03 ms`
+- Mean latency: `0.04 ms`
+- Min/Max latency: `0.03 ms` / `0.07 ms`
 
 ### Second-opinion risk
 
-- Median: `0.03 ms`
-- Mean: `0.09 ms`
-- Min/Max: `0.03 ms` / `0.61 ms`
+- Median latency: `0.03 ms`
+- Mean latency: `0.09 ms`
+- Min/Max latency: `0.03 ms` / `0.61 ms`
 
 ### Drug interaction check
 
-- Median: `0.07 ms`
-- Mean: `0.10 ms`
-- Min/Max: `0.07 ms` / `0.31 ms`
+- Median latency: `0.07 ms`
+- Mean latency: `0.10 ms`
+- Min/Max latency: `0.07 ms` / `0.31 ms`
