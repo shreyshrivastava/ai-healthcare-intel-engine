@@ -89,15 +89,15 @@ Outputs:
 
 ## Benchmarks
 
-Latest measured local run using the deterministic keyword backend:
+Latest measured local run using the deterministic keyword backend. These are latency measurements in milliseconds, not accuracy scores:
 
 - Python: `3.14.5`
 - Platform: `macOS-26.5.2-arm64-arm-64bit-Mach-O`
 - Iterations: `10`
-- API app creation median: `0.14 ms`
-- Symptom ranking median: `0.03 ms`
-- Second-opinion risk median: `0.03 ms`
-- Drug interaction check median: `0.07 ms`
+- API app creation median latency: `0.14 ms`
+- Symptom ranking median latency: `0.03 ms`
+- Second-opinion risk median latency: `0.03 ms`
+- Drug interaction check median latency: `0.07 ms`
 
 Run:
 

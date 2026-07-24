@@ -95,12 +95,12 @@ These are synthetic regression metrics, not clinical validation metrics.
 
 ## Benchmarks
 
-Latest local deterministic benchmark:
+Latest local deterministic benchmark. These are latency measurements, not accuracy metrics:
 
-- API app creation median: 0.14 ms
-- Symptom ranking median: 0.03 ms
-- Second-opinion risk median: 0.03 ms
-- Drug interaction check median: 0.07 ms
+- API app creation median latency: 0.14 ms
+- Symptom ranking median latency: 0.03 ms
+- Second-opinion risk median latency: 0.03 ms
+- Drug interaction check median latency: 0.07 ms
 
 Environment: Python 3.14.5 on macOS 26.5.2 arm64, keyword backend, 10 iterations.
 
