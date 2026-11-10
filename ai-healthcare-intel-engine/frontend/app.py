@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import os
 import sys
 from pathlib import Path
@@ -8,7 +9,9 @@ from typing import Any
 import requests
 import streamlit as st
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+FRONTEND_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = FRONTEND_DIR.parent
+REPO_URL = "https://github.com/shreyshrivastava/ai-healthcare-intel-engine"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -98,179 +101,201 @@ def check_drugs(drugs: list[str]) -> dict[str, Any]:
     }
 
 
-def inject_css() -> None:
-    st.markdown(
-        """
-        <style>
-        .stApp { background: #f7f8fb; color: #17202a; }
-        .block-container { max-width: 1180px; padding-top: 2rem; }
-        .hero {
-            border-bottom: 1px solid #d9e2ec;
-            padding: 10px 0 18px;
-            margin-bottom: 18px;
-        }
-        .hero h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: 0; color: #102a43; }
-        .hero p { color: #52606d; margin: 0; line-height: 1.5; }
-        .status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
-        .status-pill {
-            border: 1px solid #bcccdc;
-            border-radius: 999px;
-            padding: 5px 10px;
-            color: #334e68;
-            background: #f0f4f8;
-            font-size: 13px;
-        }
-        .risk-high { color: #b42318; font-weight: 700; }
-        .risk-medium { color: #a15c07; font-weight: 700; }
-        .risk-low, .risk-none { color: #027a48; font-weight: 700; }
-        div.stButton > button { border-radius: 6px; font-weight: 600; }
-        [data-testid="stMetricValue"] { color: #102a43; }
-        </style>
-        """,
-        unsafe_allow_html=True,
+RISK_KEYS = {"high", "medium", "low", "none"}
+
+
+def risk_key(risk: str) -> str:
+    """Map a risk label to a known CSS class, whatever the API returned."""
+    key = str(risk).strip().lower()
+    return key if key in RISK_KEYS else "none"
+
+
+def esc(value: Any) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def parse_drugs(text: str) -> list[str]:
+    return [drug.strip() for drug in text.replace(",", "\n").splitlines() if drug.strip()]
+
+
+def report(title: str, body: str, basis: str = "") -> str:
+    footer = f'<div class="basis"><b>Basis:</b> {esc(basis)}</div>' if basis else ""
+    return (
+        f'<section class="report"><div class="report-head">{esc(title)}</div>'
+        f'<div class="report-body">{body}</div>{footer}</section>'
     )
+
+
+def specialty_slip(data: dict[str, Any]) -> str:
+    ranked = data["ranked_specialties"]
+    has_match = bool(ranked) and float(ranked[0]["score"]) > 0
+    verdict = esc(ranked[0]["specialty"]) if has_match else "No clear match"
+    rows = ""
+    for item in ranked:
+        score = max(0.0, min(1.0, float(item["score"])))
+        if score <= 0:
+            continue
+        rows += (
+            f'<tr><th scope="row">{esc(item["specialty"])}</th>'
+            f'<td class="meter"><div class="bar"><i style="--v:{score:.3f}"></i></div></td>'
+            f'<td class="num">{score:.2f}</td></tr>'
+        )
+    table = f'<table class="data"><tbody>{rows}</tbody></table>' if rows else ""
+    body = f'<p class="finding">Suggested specialty</p><p class="verdict">{verdict}</p>{table}'
+    return report("Routing report", body)
+
+
+def scale_html(key: str) -> str:
+    cells = "".join(
+        f'<span class="{"on" if name.lower() == key else ""}">{name}</span>'
+        for name in ["Low", "Medium", "High"]
+    )
+    return f'<div class="scale {key}">{cells}</div>'
+
+
+def risk_slip(data: dict[str, Any]) -> str:
+    key = risk_key(data["risk_level"])
+    recommendation = (
+        "Second opinion recommended"
+        if data["second_opinion_recommended"]
+        else "Second opinion not flagged"
+    )
+    body = (
+        f'<p class="finding">Risk tier</p><p class="verdict {key}">{esc(data["risk_level"])}</p>'
+        f"{scale_html(key)}<strong>{recommendation}</strong>"
+    )
+    return report("Risk assessment", body, data.get("explanation") or "")
+
+
+def drug_slip(data: dict[str, Any]) -> str:
+    key = risk_key(data["overall_risk"])
+    rows = ""
+    for pair in data["interactions"]:
+        tier = risk_key(pair["risk_level"])
+        rows += (
+            f"<li><div><strong>{esc(pair['drug_a'])} + {esc(pair['drug_b'])}</strong>"
+            f'<span class="tier {tier}">{esc(pair["risk_level"])}</span></div>'
+            f"<p>{esc(pair.get('explanation') or 'No mechanism provided.')}</p></li>"
+        )
+    detail = (
+        f'<ul class="pairs">{rows}</ul>' if rows else '<p class="empty">No interactions found.</p>'
+    )
+    body = (
+        '<p class="finding">Overall risk</p>'
+        f'<p class="verdict {key}">{esc(data["overall_risk"])}</p>{scale_html(key)}{detail}'
+    )
+    return report("Interaction report", body)
+
+
+def validate_text(text: str) -> str | None:
+    return None if text.strip() else "Enter some text first."
+
+
+def validate_drugs(text: str) -> str | None:
+    return None if len(parse_drugs(text)) >= 2 else "Enter at least two drugs."
+
+
+TOOLS: dict[str, dict[str, Any]] = {
+    "Symptom routing": {
+        "id": "symptom",
+        "title": "Symptom-to-specialty routing",
+        "field": "Describe symptoms",
+        "samples": SYMPTOM_SAMPLES,
+        "button": "Route symptoms",
+        "validate": validate_text,
+        "run": predict_specialties,
+        "slip": lambda text, data: specialty_slip(data),
+    },
+    "Second-opinion risk": {
+        "id": "risk",
+        "title": "Second-opinion risk assessment",
+        "field": "Paste de-identified report",
+        "samples": RISK_SAMPLES,
+        "button": "Assess risk",
+        "validate": validate_text,
+        "run": assess_risk,
+        "slip": lambda text, data: risk_slip(data),
+    },
+    "Drug interactions": {
+        "id": "drug",
+        "title": "Drug interaction screening",
+        "field": "List drugs, one per line or comma-separated",
+        "samples": DRUG_SAMPLES,
+        "button": "Check interactions",
+        "validate": validate_drugs,
+        "run": lambda text: check_drugs(parse_drugs(text)),
+        "slip": lambda text, data: drug_slip(data),
+    },
+}
+
+
+def inject_css() -> None:
+    css = (FRONTEND_DIR / "styles.css").read_text(encoding="utf-8")
+    st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 
 def render_header() -> None:
-    mode_label = "API mode" if api_mode_enabled() else "Standalone mode"
     st.markdown(
-        f"""
-        <div class="hero">
-            <h1>AI Healthcare Intelligence Engine</h1>
-            <p>Clinical decision-support demo for synthetic scenarios: route symptoms, triage second-opinion risk, and inspect drug interaction edges.</p>
-            <div class="status-row">
-                <span class="status-pill">{mode_label}</span>
-                <span class="status-pill">Synthetic data only</span>
-                <span class="status-pill">Not medical advice</span>
-            </div>
-        </div>
-        """,
+        f"""<div class="hero"><h1>Healthcare Intelligence Engine</h1>
+<a href="{REPO_URL}" target="_blank" rel="noopener">View source</a></div>
+<div class="notice" role="note"><strong>Demonstration only.</strong> Synthetic data. Not medical advice.</div>""",
         unsafe_allow_html=True,
     )
 
 
-def render_sidebar() -> None:
-    st.sidebar.header("Demo Configuration")
-    st.sidebar.write(f"Frontend mode: `{FRONTEND_MODE}`")
-    st.sidebar.write(f"Embedding backend: `{os.getenv('HEALTHCARE_EMBEDDING_BACKEND', 'keyword')}`")
-    if api_mode_enabled():
-        st.sidebar.write(f"API URL: `{API_URL}`")
-    else:
-        st.sidebar.write("API URL: `not required`")
-    st.sidebar.divider()
-    st.sidebar.caption(
-        "Use de-identified synthetic examples only. This app is for portfolio demonstration, not diagnosis or treatment."
-    )
+def load_sample(tool_id: str, samples: dict[str, str]) -> None:
+    choice = st.session_state.get(f"{tool_id}_sample")
+    if choice:
+        st.session_state[f"{tool_id}_text"] = samples[choice]
 
 
-def render_request_error(exc: Exception) -> None:
-    st.error(f"Unable to complete the demo request: {exc}")
+def render_tool(tool: dict[str, Any]) -> None:
+    tool_id, samples = tool["id"], tool["samples"]
+    text_key, result_key = f"{tool_id}_text", f"{tool_id}_result"
+    st.session_state.setdefault(text_key, next(iter(samples.values())))
 
-
-def render_specialty_results(data: dict[str, Any]) -> None:
-    ranked = data["ranked_specialties"]
-    top = ranked[0] if ranked else {"specialty": "No match", "score": 0.0}
-    with st.container(border=True):
-        st.metric("Top Specialty", top["specialty"], f"{top['score']:.2f} similarity")
-        for item in ranked:
-            score = max(0.0, min(1.0, float(item["score"])))
-            st.write(f"**{item['specialty']}**")
-            st.progress(score)
-        if data.get("explanation"):
-            st.info(data["explanation"])
-
-
-def render_risk_results(data: dict[str, Any]) -> None:
-    risk = data["risk_level"]
-    css_class = f"risk-{risk.lower()}"
-    with st.container(border=True):
-        col1, col2 = st.columns(2)
-        col1.metric("Risk Level", risk)
-        col2.metric(
-            "Second Opinion", "Recommended" if data["second_opinion_recommended"] else "Not flagged"
-        )
-        st.markdown(f'<p class="{css_class}">Risk tier: {risk}</p>', unsafe_allow_html=True)
-        if data.get("explanation"):
-            st.info(data["explanation"])
-
-
-def render_drug_results(data: dict[str, Any]) -> None:
-    risk = data["overall_risk"]
-    css_class = f"risk-{risk.lower()}"
-    with st.container(border=True):
-        st.metric("Overall Regimen Risk", risk)
+    left, right = st.columns([5, 6], gap="large")
+    error = None
+    with left:
         st.markdown(
-            f'<p class="{css_class}">Detected regimen risk: {risk}</p>', unsafe_allow_html=True
+            f'<div class="tool-intro"><h2>{esc(tool["title"])}</h2></div>',
+            unsafe_allow_html=True,
         )
-        if data["interactions"]:
-            for pair in data["interactions"]:
-                st.write(f"**{pair['drug_a']} + {pair['drug_b']}**")
-                st.caption(
-                    f"{pair['risk_level']}: {pair.get('explanation') or 'No mechanism provided.'}"
-                )
+        st.pills(
+            "Load a sample",
+            list(samples),
+            key=f"{tool_id}_sample",
+            on_change=load_sample,
+            args=(tool_id, samples),
+        )
+        text = st.text_area(tool["field"], key=text_key, height=150)
+        if st.button(tool["button"], key=f"{tool_id}_run", type="primary"):
+            st.session_state.pop(result_key, None)
+            error = tool["validate"](text)
+            if error is None:
+                try:
+                    st.session_state[result_key] = {"input": text, "data": tool["run"](text)}
+                except Exception as exc:
+                    error = f"Unable to complete the demo request: {exc}"
+        if error:
+            st.error(error)
+
+    result = st.session_state.get(result_key)
+    is_current = result is not None and result["input"] == text
+    with right:
+        if is_current:
+            st.html(tool["slip"](text, result["data"]))
         else:
-            st.success("No interactions detected in the current demo knowledge graph.")
+            message = (
+                "The input changed. Run the check again to refresh this report."
+                if result
+                else "No report yet. Submit the form to generate one."
+            )
+            st.html(report("Report", f'<p class="empty">{message}</p>'))
 
 
-st.set_page_config(page_title="AI Healthcare Intelligence Engine", layout="wide")
+st.set_page_config(page_title="Healthcare Intelligence Engine", layout="wide")
 inject_css()
 render_header()
-render_sidebar()
-
-tab1, tab2, tab3 = st.tabs(["Symptom Routing", "Second-Opinion Risk", "Drug Interactions"])
-
-with tab1:
-    st.subheader("Symptom to Specialist Routing")
-    sample = st.selectbox("Load sample", list(SYMPTOM_SAMPLES), key="symptom_sample")
-    symptoms_text = st.text_area(
-        "Describe symptoms",
-        value=SYMPTOM_SAMPLES[sample],
-        height=150,
-        placeholder="Example: chest pain on exertion with shortness of breath",
-    )
-    if st.button("Predict Specialty", key="predict_specialist", type="primary"):
-        if not symptoms_text.strip():
-            st.warning("Please enter symptoms text.")
-        else:
-            try:
-                render_specialty_results(predict_specialties(symptoms_text))
-            except Exception as exc:
-                render_request_error(exc)
-
-with tab2:
-    st.subheader("Second-Opinion Risk Stratifier")
-    sample = st.selectbox("Load sample", list(RISK_SAMPLES), key="risk_sample")
-    report_text = st.text_area(
-        "Paste de-identified diagnosis summary or report",
-        value=RISK_SAMPLES[sample],
-        height=170,
-    )
-    if st.button("Assess Risk", key="assess_risk", type="primary"):
-        if not report_text.strip():
-            st.warning("Please paste a report.")
-        else:
-            try:
-                render_risk_results(assess_risk(report_text))
-            except Exception as exc:
-                render_request_error(exc)
-
-with tab3:
-    st.subheader("Drug Interaction Intelligence")
-    sample = st.selectbox("Load sample", list(DRUG_SAMPLES), key="drug_sample")
-    drugs_input = st.text_area(
-        "List drugs, one per line or comma-separated",
-        value=DRUG_SAMPLES[sample],
-        height=150,
-        placeholder="warfarin\naspirin",
-    )
-    if st.button("Check Interactions", key="check_interactions", type="primary"):
-        drugs = [
-            drug.strip() for drug in drugs_input.replace(",", "\n").splitlines() if drug.strip()
-        ]
-        if len(drugs) < 2:
-            st.warning("Please enter at least two drugs.")
-        else:
-            try:
-                render_drug_results(check_drugs(drugs))
-            except Exception as exc:
-                render_request_error(exc)
+selected = st.radio("Tool", list(TOOLS), horizontal=True, key="tool", label_visibility="collapsed")
+render_tool(TOOLS[selected])
